@@ -226,7 +226,8 @@ class ItemController < ApplicationController
         character_kills_index = 10
       end
       account_kills_index = account_kills / 2000.0
-      account_kills_index = account_kills.floor
+      account_kills_index = account_kills_index.floor
+      #logger.debug("account kills: #{account_kills} index : #{account_kills_index}")
       if(account_kills_index > 10)
         account_kills_index = 10
       end
@@ -240,6 +241,7 @@ class ItemController < ApplicationController
     end
 
     logger.debug("count = #{count} it_count = #{it_count} level index: #{paragon_levels.to_s}")
+    logger.debug("ACCOUTN ELITE KILLS: #{account_elite_kills.to_s}")
     #convert counts to pecentages
 
     paragon_levels = convert_values_to_percentages(paragon_levels, it_count)
@@ -271,9 +273,12 @@ class ItemController < ApplicationController
   end
 
   def convert_values_to_percentages(data, total)
+    sum = 0.0
     data.each_with_index {|val, index|
       data[index] = (data[index]/(1.0*total))*100
+      sum = sum+data[index]
     }
+    logger.debug("SUM = #{sum} data = #{data.to_s}")
     return data
   end
 end

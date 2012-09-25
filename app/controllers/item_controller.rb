@@ -26,18 +26,18 @@ class ItemController < ApplicationController
   @@affixes = {}
   @@affixes["elite_damage"] = "Damage_Percent_Bonus_Vs_Elites"
   @@affixes["dps"] = "dps"
-  @@affixes["Strength"] = "Strength_Item"
-  @@affixes["int"] = "Intelligence_Item"
-  @@affixes["dex"] = "Dexterity_Item"
-  @@affixes["vit"] = "Vitality_Item"
-  @@affixes["all_res"] = "Resistance_All"
-  @@affixes["fire_res"] = "Resistance#Fire"
-  @@affixes["lightning_res"] = "Resistance#Lightning"
-  @@affixes["arcane_res"] = "Resistance#Arcane"
-  @@affixes["cold_res"] = "Resistance#Cold"
-  @@affixes["physical_res"] = "Resistance#Physical"
-  @@affixes["poison_res"] = "Resistance#Poison"
-  @@affixes["health_from_globes"] = "Health_Globe_Bonus_Health"
+  @@affixes["strength"] = "Strength_Item"
+  @@affixes["intelligence"] = "Intelligence_Item"
+  @@affixes["dexterity"] = "Dexterity_Item"
+  @@affixes["vitality"] = "Vitality_Item"
+  @@affixes["all_resistance"] = "Resistance_All"
+  @@affixes["fire_resistance"] = "Resistance#Fire"
+  @@affixes["lightning_resistance"] = "Resistance#Lightning"
+  @@affixes["arcane_resistance"] = "Resistance#Arcane"
+  @@affixes["cold_resistance"] = "Resistance#Cold"
+  @@affixes["physical_resistance"] = "Resistance#Physical"
+  @@affixes["poison_resistance"] = "Resistance#Poison"
+  @@affixes["health_from_globe"] = "Health_Globe_Bonus_Health"
   @@affixes["life_percent"] = "Hitpoints_Max_Percent_Bonus_Item"
   @@affixes["life_after_kill"] = "Hitpoints_On_Kill"
   @@affixes["life_on_hit"] = "Hitpoints_On_Hit"
@@ -62,7 +62,7 @@ class ItemController < ApplicationController
   @@affixes["max_fury"] = "Resource_Max_Bonus#Fury"
   @@affixes["max_mana"] = "Resource_Regen_Per_Second#Mana"
   @@affixes["spirit_regen"] = "Resource_Regen_Per_Second#Spirit"
-  @@affixes["plus_exp"] = "Experience_Bonus"
+  @@affixes["Bonus_to_Experience"] = "Experience_Bonus"
   @@affixes["gold_find"] = "Gold_Find"
   @@affixes["sockets"] = "Sockets"
   @@affixes["magic_find"] = "Magic_Find"
@@ -152,6 +152,7 @@ class ItemController < ApplicationController
     query = {}
     count_query = {}
     params.each do |key, val|
+      key = key.downcase
       logger.debug("#{key} = #{val}")
       if(key.end_with?("_val"))
         #do nothing

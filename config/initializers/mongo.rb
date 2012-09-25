@@ -1,4 +1,4 @@
-MongoMapper.connection = Mongo::Connection.new('localhost', 27017)
+MongoMapper.connection = Mongo::Connection.new('ds037907.mongolab.com', 37907)
 MongoMapper.database = "#myapp-#{Rails.env}"
 
 if defined?(PhusionPassenger)

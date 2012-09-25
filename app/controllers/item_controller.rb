@@ -176,6 +176,7 @@ class ItemController < ApplicationController
     logger.info("query object = #{query.to_s}")
     connection = MongoMapper.connection
     db = connection['diablo']
+    db.authenticate('diabloUser', 'diabloUser')
     collection = db['items']
 
 

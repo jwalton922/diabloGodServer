@@ -145,6 +145,10 @@ class ItemController < ApplicationController
     @@paragonLevelBoundary << (i*5)
   end
 
+  def evaluator
+
+  end
+
 
   def calc_item_stats
     logger.info("calculating item stats")

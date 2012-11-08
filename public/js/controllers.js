@@ -74,7 +74,7 @@ function DiabloController($scope, $log, $http, $rootScope, appConstants) {
             $log.log("Added search param: "+affixSpacesReplaced+" = "+affixValue);
         }
         paramData["callback"] = "JSON_CALLBACK"
-        var requestUrl = "http://localhost:3000/calculateItemWorth";
+        var requestUrl = "/calculateItemWorth";
         var headerData = {
             "Accepts": "application/json",
             "Content-Type": "application/json"

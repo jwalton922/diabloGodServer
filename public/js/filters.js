@@ -3,8 +3,8 @@
 /* Filters */
 
 angular.module('diabloApp.filters', []).
-  filter('interpolate', ['version', function (version) {
-    return function (text) {
-      return String(text).replace(/\%VERSION\%/mg, version);
-    }
-  }]);
+  filter('caps', function() {
+  	return function(input, output) {
+  		return input.replace(/_/g, " ");
+  	}
+  });

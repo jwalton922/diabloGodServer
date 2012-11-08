@@ -225,6 +225,24 @@ function DiabloController($scope, $log, $http, $rootScope, appConstants) {
                 show: false
             }
         });
-    }
 
+    }
+    /**** Begin New World Order **********/
+    $scope.selectedClass = "";
+    $scope.charClass = ["Barbarian", "Demon Hunter" , "Monk", "Witch Doctor", "Wizard"];
+    $scope.slot = "";
+    $scope.slots = ["head", "torso", "feet", "hands", "legs", "bracers", "neck", "finger", "wapon", "off hand", "waist", "sholders"];
+
+    $scope.availbleAttrs = _.keys(affixes).sort();
+
+    $scope.providedAttributes = [
+                                    {name: "", value: 0},
+                                    {name: "", value: 0},
+                                    {name: "", value: 0},
+                                    {name: "", value: 0},
+                                    {name: "", value: 0},
+                                    {name: "", value: 0},
+                                    {name: "", value: 0},
+                                    {name: "", value: 0},
+                                ];
 };

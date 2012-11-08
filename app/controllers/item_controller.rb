@@ -153,7 +153,8 @@ class ItemController < ApplicationController
   def calc_item_stats
     logger.info("calculating item stats")
     # Getting at the mongodb instance
-    query = {}
+    query_gt = {}
+    query_lt = {}
     count_query = {}
     params.each do |key, val|
       key = key.downcase
@@ -171,100 +172,127 @@ class ItemController < ApplicationController
         else
           logger.debug("Setting query value")
           greater_than_map = {}
+          less_than_map = {}
           greater_than_map["$gt"] = val.to_f
-          affix_value = greater_than_map
-          query[affix_key] = affix_value
+          less_than_map["$lt"] = val.to_f
+          query_gt[affix_key] = greater_than_map
+          query_lt[affix_key] = less_than_map
           count_query[affix_key] = 0
         end
       end
     end
-    logger.info("query object = #{query.to_s}")
+    slot = params["slot"]
+    query_gt["itemSlot"] = slot
+    query_lt["itemSlot"] = slot
+    logger.info("slot = #{slot}");
+    logger.info("query object = #{query_gt.to_s}")
     connection = MongoMapper.connection
     db = connection['diablo']
     db.authenticate('diabloUser', 'diabloUser')
     collection = db['items']
 
-
-    cursor = collection.find(query)
-    count = collection.count(query) #THIS DOESN'T WORK, PROVIDES COUNT OF COLLECTION IGNORES QUERY
-    
+    account_paragon_levels = {}
+    account_progress_data = {}
+    account_elite_kills = {}
+    character_paragon_levels = {}
+    character_progress_data = {}
+    character_elite_kills = {}
     paragon_level_divs = []
-    account_elite_kills = []
-    character_elite_kills = []
-    character_progress_data = []
-    account_progress_data = []
-    paragon_levels = []
-    account_paragon_levels = []
-    11.times do |i|
-      character_elite_kills << 0
-      account_elite_kills << 0
+
+    account_paragon_levels["gt"] = []
+    account_progress_data["gt"] = []
+    account_elite_kills["gt"] = []
+    character_paragon_levels["gt"] = []
+    character_progress_data["gt"] = []
+    character_elite_kills["gt"] = []
+
+    account_paragon_levels["lt"] = []
+    account_progress_data["lt"] = []
+    account_elite_kills["lt"] = []
+    character_paragon_levels["lt"] = []
+    character_progress_data["lt"] = []
+    character_elite_kills["lt"] = []
+
+    10.times do |i|
+      character_elite_kills["gt"] << 0
+      character_elite_kills["lt"] << 0
+      account_elite_kills["gt"] << 0
+      account_elite_kills["lt"] << 0
     end
 
     17.times do |i|
-      character_progress_data << 0
-      account_progress_data << 0
+      character_progress_data["gt"] << 0
+      character_progress_data["lt"] << 0
+      account_progress_data["gt"] << 0
+      account_progress_data["lt"] << 0
     end
 
-    21.times do |i|
-      paragon_levels << 0
-      account_paragon_levels << 0
-      paragon_level_divs << (i*5)
+    20.times do |i|
+      character_paragon_levels["gt"] << 0
+      character_paragon_levels["lt"] << 0
+      account_paragon_levels["gt"] << 0
+      account_paragon_levels["lt"] << 0
+      paragon_level_divs << ((i+1)*5)
     end
+
+    logger.info("Performing gt query")
+    cursor_gt = collection.find(query_gt).limit(20000)
+    logger.info("Have cursor, calcualting gt stats")
+    gt_stats = calculate_sums(cursor_gt, "gt", account_paragon_levels, character_paragon_levels, character_elite_kills, account_elite_kills, character_progress_data, account_progress_data)
+    logger.info("finished calculating gt stats")
+    cursor_lt = collection.find(query_lt).limit(20000)
+    lt_stats = calculate_sums(cursor_lt, "lt", account_paragon_levels, character_paragon_levels, character_elite_kills, account_elite_kills, character_progress_data, account_progress_data)
+    #count = collection.count(query) #THIS DOESN'T WORK, PROVIDES COUNT OF COLLECTION IGNORES QUERY
+    
   
-    it_count = 0
-    cursor.each do |item|
-      it_count = it_count+1
-      #paragon levels
-      item_character_paragon_level = item["characterParagonLevel"]
-      item_account_paragon_level = item["accountMaxParagonLevel"]
-      character_index = item_character_paragon_level/5.0
-      character_index = character_index.floor
-      account_index = item_account_paragon_level/5.0
-      account_index = account_index.floor
-      paragon_levels[character_index] = paragon_levels[character_index] +1
-      account_paragon_levels[account_index] = account_paragon_levels[account_index] +1
-      #elite kills
-      character_kills = item["characterEliteKills"]
-      account_kills = item["accountEliteKills"]
-      character_kills_index = character_kills / 2000.0
-      character_kills_index = character_kills.floor
-      if(character_kills_index > 10)
-        character_kills_index = 10
-      end
-      account_kills_index = account_kills / 2000.0
-      account_kills_index = account_kills_index.floor
-      #logger.debug("account kills: #{account_kills} index : #{account_kills_index}")
-      if(account_kills_index > 10)
-        account_kills_index = 10
-      end
-      character_elite_kills[character_kills_index] = character_elite_kills[character_kills_index]+1
-      account_elite_kills[account_kills_index] = account_elite_kills[account_kills_index]+1
-      #progress
-      character_progress = item["characterProgress"].to_i
-      account_progress = item["accountProgress"].to_i
-      character_progress_data[character_progress] = character_progress_data[character_progress]+1
-      account_progress_data[account_progress] = account_progress_data[account_progress]+1
-    end
+    
 
-    logger.debug("count = #{count} it_count = #{it_count} level index: #{paragon_levels.to_s}")
-    logger.debug("ACCOUTN ELITE KILLS: #{account_elite_kills.to_s}")
+    #logger.debug("count = #{count} it_count = #{it_count} level index: #{paragon_levels.to_s}")
+    #logger.debug("ACCOUNT ELITE KILLS: #{account_elite_kills.to_s}")
     #convert counts to pecentages
+    
+    
+    
+    char_elite_avg = {}
+    acct_elite_avg = {}
+    char_plvl_avg = {}
+    acct_plvl_avg = {}
 
-    paragon_levels = convert_values_to_percentages(paragon_levels, it_count)
-    account_paragon_levels = convert_values_to_percentages(account_paragon_levels, it_count)
-    character_elite_kills = convert_values_to_percentages(account_elite_kills, it_count)
-    account_elite_kills = convert_values_to_percentages(account_elite_kills, it_count)
-    character_progress_data = convert_values_to_percentages(character_progress_data, it_count)
-    account_progress_data = convert_values_to_percentages(account_progress_data, it_count)
+    char_elite_avg["gt"] = (gt_stats["character_elite_kills_sum"])/(1.0*(gt_stats["sum"]+lt_stats["sum"]))
+    char_elite_avg["lt"] = (lt_stats["character_elite_kills_sum"])/(1.0*(gt_stats["sum"]+lt_stats["sum"]))
+    acct_elite_avg["gt"] = (gt_stats["account_elite_kills_sum"])/(1.0*(gt_stats["sum"]+lt_stats["sum"]))
+    acct_elite_avg["lt"] = (gt_stats["account_elite_kills_sum"])/(1.0*(gt_stats["sum"]+lt_stats["sum"]))
+
+    char_plvl_avg["gt"] = (gt_stats["character_paragon_level_sum"])/(1.0*(gt_stats["sum"]+lt_stats["sum"]))
+    char_plvl_avg["lt"] = (lt_stats["character_paragon_level_sum"])/(1.0*(gt_stats["sum"]+lt_stats["sum"]))
+    acct_plvl_avg["gt"] = (gt_stats["account_paragon_level_sum"])/(1.0*(gt_stats["sum"]+lt_stats["sum"]))
+    acct_plvl_avg["lt"] = (lt_stats["account_paragon_level_sum"])/(1.0*(gt_stats["sum"]+lt_stats["sum"]))
+
+    stats = {}
+    stats["char_elite_avg"] = char_elite_avg
+    stats["acct_elite_avg"] = acct_elite_avg
+    stats["char_plvl_avg"] = char_plvl_avg
+    stats["acct_plvl_avg"] = acct_plvl_avg
+    stats["num_lt"] = lt_stats["sum"]
+    stats["num_gt"] = gt_stats["sum"]
+    stats["percent_lt"] = lt_stats["sum"] / (1.0*(lt_stats["sum"]+gt_stats["sum"]))
+    stats["percent_gt"] = gt_stats["sum"] / (1.0*(lt_stats["sum"]+gt_stats["sum"]))
+
+    elite_kills_per_hour = 75
+    gold_per_hour = 350000*(1+(acct_plvl_avg["lt"]/30.0))
+    avg_gold_lt = (acct_elite_avg["lt"]/elite_kills_per_hour)*gold_per_hour
+
+    stats["avg_gold_lt"] = avg_gold_lt
 
     return_obj = {}
-    return_obj["character_paragon_levels"] = paragon_levels
+    return_obj["character_paragon_levels"] = character_paragon_levels
     return_obj["account_paragon_levels"] = account_paragon_levels
     return_obj["paragon_level_divs"] = paragon_level_divs
     return_obj["character_elite_kills"] = character_elite_kills
     return_obj["account_elite_kills"] = account_elite_kills
     return_obj["character_progress"] = character_progress_data
     return_obj["account_progress"] = account_progress_data
+    return_obj["stats"] = stats
 
     logger.debug("return obj: #{return_obj.to_json}")
     render :json => return_obj.to_json, :callback => params[:callback]
@@ -276,6 +304,79 @@ class ItemController < ApplicationController
     # In the Question model you can use this shortcut
     # collection to get at the questions collection
     #collection.find({}).to_a
+  end
+
+  def calculate_sums(cursor, mapIndex, account_paragon_levels, character_paragon_levels, character_elite_kills, account_elite_kills, character_progress_data, account_progress_data)
+    it_count = 0
+    character_paragon_sum = 0
+    account_paragon_sum = 0
+    character_elite_kills_sum = 0
+    account_elite_kills_sum = 0
+
+    cursor.each do |item|
+      it_count = it_count+1
+      #paragon levels
+      item_character_paragon_level = item["characterParagonLevel"]
+      item_account_paragon_level = item["accountMaxParagonLevel"]
+      character_paragon_sum+=item_character_paragon_level
+      account_paragon_sum+=item_account_paragon_level
+      character_index = item_character_paragon_level/5.0
+      character_index = character_index.floor
+      account_index = item_account_paragon_level/5.0
+      account_index = account_index.floor
+      if(character_index > 19)
+        character_index = 19
+      end
+      if(account_index > 19)
+        account_index = 19
+      end
+      #logger.info("char plvl index = #{character_index} acct plvl index = #{account_index}")
+      character_paragon_levels[mapIndex][character_index] = character_paragon_levels[mapIndex][character_index] +1
+      account_paragon_levels[mapIndex][account_index] = account_paragon_levels[mapIndex][account_index] +1
+      #elite kills
+      character_kills = item["characterEliteKills"]
+      account_kills = item["accountEliteKills"]
+      character_elite_kills_sum+=character_kills
+      account_elite_kills_sum+=account_kills
+      character_kills_index = character_kills / 2000.0
+      character_kills_index = character_kills.floor
+      if(character_kills_index > 9)
+        character_kills_index = 9
+      end
+      account_kills_index = account_kills / 2000.0
+      account_kills_index = account_kills_index.floor
+      #logger.debug("account kills: #{account_kills} index : #{account_kills_index}")
+      if(account_kills_index > 9)
+        account_kills_index = 9
+      end
+      #logger.info("character elite index: #{character_kills_index} character_kills = #{character_kills}")
+      character_elite_kills[mapIndex][character_kills_index] = character_elite_kills[mapIndex][character_kills_index]+1
+      account_elite_kills[mapIndex][account_kills_index] = account_elite_kills[mapIndex][account_kills_index]+1
+      #progress
+      character_progress = item["characterProgress"].to_i
+      account_progress = item["accountProgress"].to_i
+      #logger.info("character progress = #{character_progress}")
+      character_progress_data[mapIndex][character_progress] = character_progress_data[mapIndex][character_progress]+1
+      account_progress_data[mapIndex][account_progress] = account_progress_data[mapIndex][account_progress]+1
+    end
+
+    convert_values_to_percentages(character_paragon_levels[mapIndex], it_count)
+    convert_values_to_percentages(account_paragon_levels[mapIndex], it_count)
+    convert_values_to_percentages(account_elite_kills[mapIndex], it_count)
+    convert_values_to_percentages(account_elite_kills[mapIndex], it_count)
+    convert_values_to_percentages(character_progress_data[mapIndex], it_count)
+    convert_values_to_percentages(account_progress_data[mapIndex], it_count)
+
+
+    stats = {}
+    stats["sum"] = it_count
+    stats["character_elite_kills_sum"] = character_elite_kills_sum
+    stats["account_elite_kills_sum"] = account_elite_kills_sum
+    stats["character_paragon_level_sum"] = character_paragon_sum
+    stats["account_paragon_level_sum"] = account_paragon_sum
+     
+    return stats
+    
   end
 
   def convert_values_to_percentages(data, total)

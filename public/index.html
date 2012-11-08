@@ -47,9 +47,32 @@
                     <select ng-model="attr.name" ng-options="attrName | caps for attrName in availbleAttrs"></select>
                     <input type="text" class="input-mini" ng-model="attr.value">
                 </div>
+                <button ng-click=submitAttributes()>Submit</button>
                 
              </div>
              <div class="span8">
+                <div ng-show="processing"><img src="325.gif"/></div>
+                <div id="reportcard">
+                    <div class="row">
+                        Statistics For Items Better
+                        Rank: {{rankGt}} <br />
+                        Avg Account Elite Kills: {{accountEliteKillsGt}} <br />
+                        Avg Char Elite Kills: {{characterEliteKillsGt}} <br />
+                        Avg Account Paragon Level: {{accountParagonLevelGt}}<br />
+                        Avg Char Paragon Level: {{characterParagonLevelGt}}<br />
+                    </div>
+                    <div class="row">
+                        Statistics For Items Worse
+                        Rank: {{rankLt}} <br />
+                        Avg Account Elite Kills: {{accountEliteKillsLt}} <br />
+                        Avg Char Elite Kills: {{characterEliteKillsLt}} <br />
+                        Avg Account Paragon Level: {{accountParagonLevelLt}}<br />
+                        Avg Char Paragon Level: {{characterParagonLevelLt}}<br />
+                        Estimated Gold Earned: {{estGoldEarned}} <br />
+                    </div>
+
+                </div>
+
                 <!-- Body content -->
                 body content
                 Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod

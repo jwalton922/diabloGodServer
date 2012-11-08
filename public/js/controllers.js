@@ -230,10 +230,22 @@ function DiabloController($scope, $log, $http, $rootScope, appConstants) {
     /**** Begin New World Order **********/
     $scope.selectedClass = "";
     $scope.charClass = ["Barbarian", "Demon Hunter" , "Monk", "Witch Doctor", "Wizard"];
-    $scope.slot = "";
     $scope.slots = ["head", "torso", "feet", "hands", "legs", "bracers", "neck", "finger", "wapon", "off hand", "waist", "sholders"];
-
+    $scope.selectedSlot = $scope.slots[0]
     $scope.availbleAttrs = _.keys(affixes).sort();
+
+    $scope.rankGt = null;
+    $scope.rankLt = null;
+    $scope.accountEliteKillsGt = 0;
+    $scope.accountEliteKillsLt = 0;
+    $scope.characterEliteKillsGt = 0;
+    $scope.characterEliteKillsLt = 0;
+    $scope.accountParagonLevelGt = 0;
+    $scope.accountParagonLevelLt = 0;
+    $scope.characterParagonLevelGt = 0;
+    $scope.characterParagonLevelLt = 0;
+    $scope.estGoldEarned = 0;
+
 
     $scope.providedAttributes = [
                                     {name: "", value: 0},
@@ -245,4 +257,60 @@ function DiabloController($scope, $log, $http, $rootScope, appConstants) {
                                     {name: "", value: 0},
                                     {name: "", value: 0},
                                 ];
+    $scope.processing = false;
+    $scope.submitAttributes = function(){
+        $log.log("submitAttributes called");
+        var paramData = {};
+        for(var i = 0; i < $scope.providedAttributes.length; i++){
+            if($scope.providedAttributes[i].value > 0){
+               paramData[$scope.providedAttributes[i].name] = $scope.providedAttributes[i].value;
+            }
+            
+        }
+
+        if($scope.selectedSlot != null && $scope.selectedSlot.length > 0){
+            paramData["slot"] = $scope.selectedSlot;
+        }
+
+        $log.log("paramData = "+angular.toJson(paramData));
+        paramData["callback"] = "JSON_CALLBACK"
+        var requestUrl = "/calculateItemWorth";
+        var headerData = {
+            "Accepts": "application/json",
+            "Content-Type": "application/json"
+        };
+        var request = {};
+        request.success = function(xhr){
+            $log.log("Received item results: "+angular.toJson(xhr));
+
+        };
+        request.error = function(xhr){
+            $log.log("Error getting item results: "+angular.toJson(xhr));
+        };
+        $http.jsonp(requestUrl, {
+            params : paramData,
+            headers: headerData
+        }).
+        success(function(data, status, headers, config){
+            $log.log("Success! data from server: "+angular.toJson(data));
+            $scope.processing = false;
+            $scope.rankGt = data.stats["num_gt"];
+            $scope.rankLt = data.stats["num_lt"];
+            $scope.accountEliteKillsGt = data.stats["acct_elite_avg"]["gt"];
+            $scope.accountEliteKillsLt = data.stats["acct_elite_avg"]["lt"];
+            $scope.characterEliteKillsGt = data.stats["char_elite_avg"]["gt"];
+            $scope.characterEliteKillsLt = data.stats["char_elite_avg"]["lt"];
+            $scope.accountParagonLevelGt = data.stats["acct_plvl_avg"]["gt"];
+            $scope.accountParagonLevelLt = data.stats["acct_plvl_avg"]["lt"];
+            $scope.characterParagonLevelGt = data.stats["char_plvl_avg"]["gt"];
+            $scope.characterParagonLevelLt = data.stats["char_plvl_avg"]["lt"];
+            $scope.estGoldEarned = data.stats["avg_gold_lt"];
+            //$scope.createCharts(data);
+
+        }).error(function(data, status, headers, config){
+            $log.log("Error :(");
+            $scope.processing = false;
+        });
+        $scope.processing = true;
+    }
 };

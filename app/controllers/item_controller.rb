@@ -258,15 +258,15 @@ class ItemController < ApplicationController
     char_plvl_avg = {}
     acct_plvl_avg = {}
 
-    char_elite_avg["gt"] = (gt_stats["character_elite_kills_sum"])/(1.0*(gt_stats["sum"]+lt_stats["sum"]))
-    char_elite_avg["lt"] = (lt_stats["character_elite_kills_sum"])/(1.0*(gt_stats["sum"]+lt_stats["sum"]))
-    acct_elite_avg["gt"] = (gt_stats["account_elite_kills_sum"])/(1.0*(gt_stats["sum"]+lt_stats["sum"]))
-    acct_elite_avg["lt"] = (gt_stats["account_elite_kills_sum"])/(1.0*(gt_stats["sum"]+lt_stats["sum"]))
+    char_elite_avg["gt"] = (gt_stats["character_elite_kills_sum"])/(1.0*(gt_stats["sum"]))
+    char_elite_avg["lt"] = (lt_stats["character_elite_kills_sum"])/(1.0*(lt_stats["sum"]))
+    acct_elite_avg["gt"] = (gt_stats["account_elite_kills_sum"])/(1.0*(gt_stats["sum"]))
+    acct_elite_avg["lt"] = (lt_stats["account_elite_kills_sum"])/(1.0*(lt_stats["sum"]))
 
-    char_plvl_avg["gt"] = (gt_stats["character_paragon_level_sum"])/(1.0*(gt_stats["sum"]+lt_stats["sum"]))
-    char_plvl_avg["lt"] = (lt_stats["character_paragon_level_sum"])/(1.0*(gt_stats["sum"]+lt_stats["sum"]))
-    acct_plvl_avg["gt"] = (gt_stats["account_paragon_level_sum"])/(1.0*(gt_stats["sum"]+lt_stats["sum"]))
-    acct_plvl_avg["lt"] = (lt_stats["account_paragon_level_sum"])/(1.0*(gt_stats["sum"]+lt_stats["sum"]))
+    char_plvl_avg["gt"] = (gt_stats["character_paragon_level_sum"])/(1.0*(gt_stats["sum"]))
+    char_plvl_avg["lt"] = (lt_stats["character_paragon_level_sum"])/(1.0*(lt_stats["sum"]))
+    acct_plvl_avg["gt"] = (gt_stats["account_paragon_level_sum"])/(1.0*(gt_stats["sum"]))
+    acct_plvl_avg["lt"] = (lt_stats["account_paragon_level_sum"])/(1.0*(lt_stats["sum"]))
 
     stats = {}
     stats["char_elite_avg"] = char_elite_avg

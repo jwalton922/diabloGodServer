@@ -9,11 +9,19 @@ body {
 	color: #eee;
 }
 
+#statistics {
+	min-height: 482px;
+}
+
 .box {
 	background: url("../img/leather-dark.jpg");
 	border: 2px solid #26231E;
 	padding: 10px;
-	margin-top: 20px;
+}
+
+.metal {
+	background: url("../img/metal.jpg") repeat-x;
+	height:30px;
 }
 
 @font-face {
@@ -25,6 +33,17 @@ body {
 h1, h2, h3, h4, h5, h6, .btn {
 	font-family: AvQest;
 	font-weight: normal;
+}
+
+.table td {
+	border-top: 1px solid #333;
+}
+
+.table th {
+	font-family: AvQest;
+	font-weight: lighter;
+	font-size: 1.7em;
+	border-top: none;
 }
 
 p, label {
@@ -69,6 +88,10 @@ select {
 	padding-bottom: 7px;
 }
 
+.top-gaps {
+	margin-top: 10px;
+}
+
 .top-gap {
 	margin-top: 25px;
 }
@@ -76,3 +99,56 @@ select {
 .top-gapl {
 	margin-top: 50px;
 }
+
+
+/* Select2 Overrides
+**********************************************/
+.select2-result-selectable {
+	background: #555;
+	color: #ccc;
+}
+
+
+
+html, body, #wrap { height: 100%; }
+
+body > #wrap {height: auto; min-height: 100%;}
+
+#main { padding-bottom: 150px; }  /* must be same height as the footer */
+
+#footer { 
+    position: relative;
+	margin-top: -150px; /* negative value of footer height */
+	height: 150px;
+	clear:both;
+} 
+
+/* CLEAR FIX*/
+.clearfix:after {content: ".";
+	display: block;
+	height: 0;
+	clear: both;
+	visibility: hidden;}
+.clearfix {display: inline-block;}
+/* Hides from IE-mac \*/
+* html .clearfix { height: 1%;}
+.clearfix {display: block;}
+/* End hide from IE-mac */
+
+#legalnotice {
+	margin: 25px 0 0 25px;
+	color: #444;
+	font-size: smaller;
+}
+
+/* CLEAR FIX*/
+.clearfix:after {content: ".";
+	display: block;
+	height: 0;
+	clear: both;
+	visibility: hidden;}
+.clearfix {display: inline-block;}
+/* Hides from IE-mac \*/
+* html .clearfix { height: 1%;}
+.clearfix {display: block;}
+/* End hide from IE-mac */

@@ -99,7 +99,7 @@ Version: 3.2 Timestamp: Mon Sep 10 10:38:04 PDT 2012
 }
 
 .select2-drop {
-    background: #fff;
+    background: #333;
     color: #000;
     border: 1px solid #aaa;
     border-top: 0;
@@ -239,13 +239,13 @@ Version: 3.2 Timestamp: Mon Sep 10 10:38:04 PDT 2012
   -o-box-shadow     : 0 1px 0 #fff inset;
   box-shadow        : 0 1px 0 #fff inset;
   background-color: #eee;
-  background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, white), color-stop(0.5, #eeeeee));
-  background-image: -webkit-linear-gradient(center bottom, white 0%, #eeeeee 50%);
-  background-image: -moz-linear-gradient(center bottom, white 0%, #eeeeee 50%);
-  background-image: -o-linear-gradient(bottom, white 0%, #eeeeee 50%);
-  background-image: -ms-linear-gradient(top, #ffffff 0%,#eeeeee 50%);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#eeeeee',GradientType=0 );
-  background-image: linear-gradient(top, #ffffff 0%,#eeeeee 50%);
+  background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #333), color-stop(0.5, #111));
+  background-image: -webkit-linear-gradient(center bottom, #333 0%, #111 50%);
+  background-image: -moz-linear-gradient(center bottom, #333 0%, #111 50%);
+  background-image: -o-linear-gradient(bottom, #333 0%, #111 50%);
+  background-image: -ms-linear-gradient(top, #333 0%,#111 50%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#333', endColorstr='#111',GradientType=0 );
+  background-image: linear-gradient(top, #333 0%,#111 50%);
   -webkit-border-bottom-left-radius : 0;
   -webkit-border-bottom-right-radius: 0;
   -moz-border-radius-bottomleft : 0;
@@ -255,7 +255,8 @@ Version: 3.2 Timestamp: Mon Sep 10 10:38:04 PDT 2012
 }
 
 .select2-dropdown-open .select2-choice div {
-  background: transparent;
+  background: #555;
+  color: #ccc;
   border-left: none;
 }
 .select2-dropdown-open .select2-choice div b {
@@ -505,7 +506,7 @@ disabled look for already selected choices in the results dropdown
 /* end multiselect */
 
 .select2-result-selectable .select2-match,
-.select2-result-unselectable .select2-result-selectable .select2-match { text-decoration: underline; }
+.select2-result-unselectable .select2-result-selectable .select2-match { text-decoration: underline; background: #f00; }
 .select2-result-unselectable .select2-match { text-decoration: none; }
 
 .select2-offscreen { position: absolute; left: -10000px; }

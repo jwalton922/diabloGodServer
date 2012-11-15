@@ -269,6 +269,7 @@ function DiabloController($scope, $log, $http, $rootScope, appConstants) {
         });
 
     }
+    
     /**** Begin New World Order **********/
     $scope.selectedClass = "";
     $scope.charClass = ["Barbarian", "Demon Hunter" , "Monk", "Witch Doctor", "Wizard"];

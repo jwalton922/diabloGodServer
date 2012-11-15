@@ -1,0 +1,78 @@
+/** app.css **/
+
+body {
+	background: url("../img/bg1.jpg") no-repeat center center fixed; 
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	color: #eee;
+}
+
+.box {
+	background: url("../img/leather-dark.jpg");
+	border: 2px solid #26231E;
+	padding: 10px;
+	margin-top: 20px;
+}
+
+@font-face {
+	font-family: AvQest;
+	src: url("../fonts/AvQest.ttf");
+	font-weight: lighter;
+}
+
+h1, h2, h3, h4, h5, h6, .btn {
+	font-family: AvQest;
+	font-weight: normal;
+}
+
+p, label {
+	color: #eee;
+}
+
+textarea, input[type="text"], input[type="password"], 
+input[type="datetime"], input[type="datetime-local"], 
+input[type="date"], input[type="month"], input[type="time"], 
+input[type="week"], input[type="number"], input[type="email"], 
+input[type="url"], input[type="search"], input[type="tel"], 
+input[type="color"], .uneditable-input {
+	background: #111;
+	color: #eee;
+
+}
+
+textarea, input[type="text"], input[type="password"], 
+input[type="datetime"], input[type="datetime-local"], 
+input[type="date"], input[type="month"], input[type="time"], 
+input[type="week"], input[type="number"], input[type="email"], 
+input[type="url"], input[type="search"], input[type="tel"], 
+input[type="color"], .uneditable-input {
+    background-color: #111;
+    border: 1px solid #26231E;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+    transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;
+}
+
+.input-mini {
+	margin-left: 10px;
+}
+
+select {
+    background-color: #111;
+    color: #eee;
+    border: 1px solid #26231E;
+    width: 220px;
+}
+
+.form-inline {
+	padding-bottom: 7px;
+}
+
+.top-gap {
+	margin-top: 25px;
+}
+
+.top-gapl {
+	margin-top: 50px;
+}

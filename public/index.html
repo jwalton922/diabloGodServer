@@ -6,10 +6,10 @@
         <meta name = "format-detection" content = "telephone=no"/>
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        
-        <link rel="stylesheet" type="text/css" href="css/app.css" />
+
         <link rel="stylesheet" type="text/css" href="lib/bootstrap/css/bootstrap.min.css" />
         <link rel="stylesheet" type="text/css" href="lib/bootstrap/css/bootstrap-responsive.min.css" />
+        <link rel="stylesheet" type="text/css" href="css/app.css" />
         <script src="lib/jquery-1.7.2.min.js"></script>
         <script src="lib/bootstrap/js/bootstrap.min.js"></script>
         <script src="lib/angular/angular.min.js"></script>
@@ -33,7 +33,12 @@
     </head>
     <body ng-controller="DiabloController" ng-init="init()" class="container-fluid">
         <div class="row-fluid">
-            <div class="span4">
+            <div class="span12">
+                <img src="img/logo.png">
+            </div>
+        </div>
+        <div class="row-fluid">
+            <div class="span4 box">
                 <!-- Side bar content --> 
                 <label class="control-label">Class</label>
                 <select ng-model="selectedClass" ng-options="classz for classz in charClass"></select>
@@ -47,28 +52,32 @@
                     <select ng-model="attr.name" ng-options="attrName | caps for attrName in availbleAttrs"></select>
                     <input type="text" class="input-mini" ng-model="attr.value">
                 </div>
-                <button ng-click=submitAttributes()>Submit</button>
+                <button class="btn btn-danger" ng-click=submitAttributes()>Search</button>
                 
              </div>
-             <div class="span8">
+             <div class="span8 box">
                 <div ng-show="processing"><img src="325.gif"/></div>
                 <div id="reportcard">
-                    <div class="row">
-                        Statistics For Items Better<br />
-                        Rank: {{rankGt}} <br />
-                        Avg Account Elite Kills: {{accountEliteKillsGt}} <br />
-                        Avg Char Elite Kills: {{characterEliteKillsGt}} <br />
-                        Avg Account Paragon Level: {{accountParagonLevelGt}}<br />
-                        Avg Char Paragon Level: {{characterParagonLevelGt}}<br />
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <h2>Statistics For Items Better</h2>
+                            Rank: {{rankGt}} <br />
+                            Avg Account Elite Kills: {{accountEliteKillsGt}} <br />
+                            Avg Char Elite Kills: {{characterEliteKillsGt}} <br />
+                            Avg Account Paragon Level: {{accountParagonLevelGt}}<br />
+                            Avg Char Paragon Level: {{characterParagonLevelGt}}<br />
+                        </div>
                     </div>
-                    <div class="row">
-                        Statistics For Items Worse <br />
-                        Rank: {{rankLt}} <br />
-                        Avg Account Elite Kills: {{accountEliteKillsLt}} <br />
-                        Avg Char Elite Kills: {{characterEliteKillsLt}} <br />
-                        Avg Account Paragon Level: {{accountParagonLevelLt}}<br />
-                        Avg Char Paragon Level: {{characterParagonLevelLt}}<br />
-                        Estimated Gold Earned: {{estGoldEarned}} <br />
+                    <div class="row-fluid">
+                        <div class="span12">
+                            Statistics For Items Worse <br />
+                            Rank: {{rankLt}} <br />
+                            Avg Account Elite Kills: {{accountEliteKillsLt}} <br />
+                            Avg Char Elite Kills: {{characterEliteKillsLt}} <br />
+                            Avg Account Paragon Level: {{accountParagonLevelLt}}<br />
+                            Avg Char Paragon Level: {{characterParagonLevelLt}}<br />
+                            Estimated Gold Earned: {{estGoldEarned}} <br />
+                        </div>
                     </div>
 
                 </div>

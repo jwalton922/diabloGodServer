@@ -187,8 +187,8 @@ class ItemController < ApplicationController
     logger.info("slot = #{slot}");
     logger.info("query object = #{query_gt.to_s}")
     connection = MongoMapper.connection
-    db = connection['diablo']
-    db.authenticate('diabloUser', 'diabloUser')
+    db = connection['stats']
+    db.authenticate('admin', 'EWzPPhUUGq4K')
     collection = db['items']
 
     account_paragon_levels = {}

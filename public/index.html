@@ -35,66 +35,98 @@
         <script src="js/services.js" type="text/javascript"></script>
         
     </head>
-    <body ng-controller="DiabloController" ng-init="init()" class="container-fluid">
-        <div class="row-fluid">
-            <div class="span12">
-                <img src="img/logo.png">
+    <body ng-controller="DiabloController" ng-init="init()">
+        <div id="wrap">
+            <div id="main" class="container-fluid clearfix">
+                <div class="row-fluid">
+                    <div class="span12">
+                        <img src="img/logo.png">
+                    </div>
+                </div>
+                <div class="row-fluid">
+                    <div id="attributes" class="span4">
+                        <div class="metal"></div>
+                        <div class="box">
+                            <!-- Side bar content --> 
+                            <label class="control-label">Class</label>
+                            <select ng-model="selectedClass" ng-options="classz for classz in charClass"></select>
+                            
+                            <label class="control-label">Slot</label>
+                            <select ng-model="selectedSlot" ng-options="slot for slot in slots"></select>
+                            
+
+                            <label class="control-label">Attributes</label>
+                            <div class="form-inline" ng-repeat="attr in providedAttributes"> 
+                                <select ui-select2 class="span6" ng-model="attr.name">
+                                    <option value="">Select Attribute</option>
+                                    <option ng-repeat="attrName in availbleAttrs">{{attrName | caps}}</option>
+                                </select>
+                                <input type="text" class="input-mini" ng-model="attr.value" placeholder="0">
+                            </div>
+                            <button class="btn btn-danger" ng-click=submitAttributes()>Search</button>
+                        </div>
+                     </div>
+                     <div class="span8">
+                        <div class="metal"></div>
+                        <div id="statistics" class="box">
+                            <div id="reportcard">
+                                <div class="row-fluid">
+                                    <div class="span12">
+                                        <table class="table">
+                                            <tr>
+                                                <th>Statistic</th>
+                                                <th>For better items</th>
+                                                <th>For worse items</th>
+                                            </tr>
+                                            <tr>
+                                                <td>Rank:</td>
+                                                <td>{{rankGt}}</td>
+                                                <td>{{rankLt}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Avg Account Elite Kills:</td>
+                                                <td>{{accountEliteKillsGt}}</td>
+                                                <td>{{accountEliteKillsLt}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Avg Char Elite Kills:</td>
+                                                <td>{{characterEliteKillsGt}}</td>
+                                                <td>{{characterEliteKillsLt}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Avg Account Paragon Level:</td>
+                                                <td>{{accountParagonLevelGt}}</td>
+                                                <td>{{accountParagonLevelLt}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Avg Char Paragon Level:</td>
+                                                <td>{{characterParagonLevelGt}}</td>
+                                                <td>{{characterParagonLevelLt}}</td>
+                                            </tr>
+                                        </table>
+                                        Estimated Gold Earned: {{estGoldEarned}} <br />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div ng-show="processing" class="top-gapl">
+                                <h3>Searching items...</h3>
+                                <div class="progress progress-striped progress-danger active top-gaps">
+                                    <div class="bar" style="width: 100%;"></div>
+                                </div>
+                            </div>
+
+                            <div id="acctEliteKillsGt" class="top-gapl"></div>
+                            <div id="acctEliteKillsLt" class="top-gap"></div>
+                            <div id="acctPlvlGt" class="top-gap"></div>
+                            <div id="acctPlvlLt" class="top-gap"></div>
+                        </div>
+                     </div>
+                 </div>
+            </div>
+            <div id="footer">
+                <div id="legalnotice">Diablo® and Blizzard Entertainment® are all trademarks or registered trademarks of Blizzard Entertainment in the United States and/or other countries. These terms and all related materials, logos, and images are copyright © Blizzard Entertainment. This site is in no way associated with or endorsed by Blizzard Entertainment®.</div>
             </div>
         </div>
-        <div class="row-fluid">
-            <div class="span4 box">
-                <!-- Side bar content --> 
-                <label class="control-label">Class</label>
-                <select ng-model="selectedClass" ng-options="classz for classz in charClass"></select>
-                
-                <label class="control-label">Slot</label>
-                <select ng-model="selectedSlot" ng-options="slot for slot in slots"></select>
-                
-
-                <label class="control-label">Attributes</label>
-                <div class="form-inline" ng-repeat="attr in providedAttributes"> 
-                    <select ui-select2 class="span6" ng-model="attr.name">
-                        <option value="">Select Attribute</option>
-                        <option ng-repeat="attrName in availbleAttrs">{{attrName | caps}}</option>
-                    </select>
-                    <input type="text" class="input-mini" ng-model="attr.value" placeholder="0">
-                </div>
-                <button class="btn btn-danger" ng-click=submitAttributes()>Search</button>
-                
-             </div>
-             <div class="span8 box">
-                <div ng-show="processing"><img src="325.gif"/></div>
-                <div id="reportcard">
-                    <div class="row-fluid">
-                        <div class="span12">
-                            <h2>Statistics For Items Better</h2>
-                            Rank: {{rankGt}} <br />
-                            Avg Account Elite Kills: {{accountEliteKillsGt}} <br />
-                            Avg Char Elite Kills: {{characterEliteKillsGt}} <br />
-                            Avg Account Paragon Level: {{accountParagonLevelGt}}<br />
-                            Avg Char Paragon Level: {{characterParagonLevelGt}}<br />
-                        </div>
-                    </div>
-                    <div class="row-fluid">
-                        <div class="span12">
-                            Statistics For Items Worse <br />
-                            Rank: {{rankLt}} <br />
-                            Avg Account Elite Kills: {{accountEliteKillsLt}} <br />
-                            Avg Char Elite Kills: {{characterEliteKillsLt}} <br />
-                            Avg Account Paragon Level: {{accountParagonLevelLt}}<br />
-                            Avg Char Paragon Level: {{characterParagonLevelLt}}<br />
-                            Estimated Gold Earned: {{estGoldEarned}} <br />
-                        </div>
-                    </div>
-
-                </div>
-
-                <div id="acctEliteKillsGt"></div>
-                <div id="acctEliteKillsLt"></div>
-                <div id="acctPlvlGt"></div>
-                <div id="acctPlvlLt"></div>
-
-             </div>
-         </div>   
     </body>
 </html>

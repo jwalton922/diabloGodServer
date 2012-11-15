@@ -57,7 +57,7 @@
                         <option value="">Select Attribute</option>
                         <option ng-repeat="attrName in availbleAttrs">{{attrName | caps}}</option>
                     </select>
-                    <input type="text" class="input-mini" ng-model="attr.value">
+                    <input type="text" class="input-mini" ng-model="attr.value" placeholder="0">
                 </div>
                 <button class="btn btn-danger" ng-click=submitAttributes()>Search</button>
                 

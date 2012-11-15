@@ -290,14 +290,14 @@ function DiabloController($scope, $log, $http, $rootScope, appConstants) {
 
 
     $scope.providedAttributes = [
-                                    {name: "", value: 0},
-                                    {name: "", value: 0},
-                                    {name: "", value: 0},
-                                    {name: "", value: 0},
-                                    {name: "", value: 0},
-                                    {name: "", value: 0},
-                                    {name: "", value: 0},
-                                    {name: "", value: 0},
+                                    {name: "", value: null},
+                                    {name: "", value: null},
+                                    {name: "", value: null},
+                                    {name: "", value: null},
+                                    {name: "", value: null},
+                                    {name: "", value: null},
+                                    {name: "", value: null},
+                                    {name: "", value: null},
                                 ];
     $scope.processing = false;
     $scope.submitAttributes = function(){

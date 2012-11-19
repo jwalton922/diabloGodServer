@@ -149,6 +149,25 @@ class ItemController < ApplicationController
 
   end
 
+  def overview
+
+  end
+
+  def stats
+    connection = MongoMapper.connection
+    db = connection['diablo']
+    db.authenticate('diabloUser', 'diabloUser')
+    collection = db['stats']
+    cursor = collection.find({})
+    stats = []
+    cursor.each do |item|
+      stats << item
+    end
+    logger.debug("return obj: #{stats.to_json}")
+    render :json => stats.to_json, :callback => params[:callback]
+
+
+  end
 
   def calc_item_stats
     logger.info("calculating item stats")

@@ -58,4 +58,6 @@ DiabloGodServer::Application.routes.draw do
 
   match 'calculateItemWorth', :to => 'item#calc_item_stats'
   match 'evaluator', :to => 'item#evaluator'
+  match 'overview', :to => 'item#overview'
+  match 'stats', :to => 'item#stats'
 end

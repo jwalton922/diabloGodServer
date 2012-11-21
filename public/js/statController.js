@@ -76,6 +76,9 @@ function DiabloStatController($scope, $log, $http, $rootScope, appConstants) {
 			for(var i = 0; i < $scope.heroClasses.length; i++){
 				if(charClass == $scope.heroClasses[i].statid){
 					$scope.heroClasses[i].stats = charStats[charClass];
+					for(var statKey in $scope.heroClasses[i].stats){
+						$scope.heroClasses[i].stats[statKey] = Math.round($scope.heroClasses[i].stats[statKey] * 100 ) / 100.0
+					}
 				}
 			}
 		}

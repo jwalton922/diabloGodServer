@@ -24,6 +24,14 @@ body {
 	height:30px;
 }
 
+a {
+	color: #f00;
+}
+
+a:hover {
+	color: #f44;
+}
+
 @font-face {
 	font-family: AvQest;
 	src: url("../fonts/AvQest.ttf");

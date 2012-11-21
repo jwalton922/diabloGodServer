@@ -77,7 +77,7 @@
             <div id="main" class="container-fluid clearfix">
                 <div class="row-fluid">
                     <div class="span12">
-                        <img src="img/logo.png">
+                        <a href="/"><img src="img/logo.png"></a>
                     </div>
                 </div>
                 <div class="row-fluid">
@@ -87,19 +87,19 @@
                                 <a href="/">Items</a>
                             </li>
                             <li>
-                                <a href="#">Barbarian</a>
+                                <a href="barbarian.html">Barbarian</a>
                             </li>
                             <li>
-                                <a href="#">Demon Hunter</a>
+                                <a href="demonhunter.html">Demon Hunter</a>
                             </li>
                             <li>
-                                <a href="#">Monk</a>
+                                <a href="monk.html">Monk</a>
                             </li>
                             <li>
-                                <a href="#">Witch Doctor</a>
+                                <a href="witchdoctor.html">Witch Doctor</a>
                             </li>
                             <li>
-                                <a href="#">Wizard</a>
+                                <a href="wizard.html">Wizard</a>
                             </li>
                         </ul>
                     </div>
@@ -163,7 +163,7 @@
                                             We also have crunched some data and have some general statistics on the
                                             hero population by class. You can see the average character stats as well
                                             as most common item attributes per slot. Check out the class pages for
-                                            this info: <a href="#">Barbarian</a>, <a href="#">Demon Hunter</a>, <a href="#">Monk</a>, <a href="#">Witch Doctor</a>, <a href="#">Wizard</a>.
+                                            this info: <a href="barbarian.html">Barbarian</a>, <a href="demonhunter.html">Demon Hunter</a>, <a href="monk.html">Monk</a>, <a href="witchdoctor.html">Witch Doctor</a>, <a href="wizard.html">Wizard</a>.
                                         </p>
                                     </div>
                                     <div class="span12" ng-hide="showLandingPage">
@@ -270,6 +270,17 @@
                     by Blizzard Entertainment®.
                 </div>
             </div>
+        </div>
+        <div ng-show="false">
+            Blizzard released an API a couple of months ago that allows access to a wealth of information about individual player's heroes and account information.  We have been collecting that data for awhile now and are creating a site to share the insight we can gain from having that data.
+
+The knowledge that can be gleaned from that data is enormous.  We can generate statistics about the general Diablo 3 population including things like: the average paragon level, average elite kills, frequency of players upgrading items, how often players play, how much they play, most common attributes per item slot per class, and more.  
+
+You can check out a beta at www.diabloitem.info.  
+
+The knowledge in itself is interesting, but it also provides insight into the health of the game, player ranking information, and valuable auction house market information.  Selling items on the auction house can be frustrating.  It's hard to gauge the worth of an item without a lot of research.  Sure, you can look at the auction house at any given time and give it a price relative to those with similar stats, but how often does this work?  The price information is handy, but the auction house does not provide you with any information as to the market you are selling to.  
+
+We can provide you with data about the market an item is valuable too by giving you information about the players who have better items or those who have worse items.  Inserting some attributes into our item evaluator will give you information about the population who needs that item on a character basis AND an account basis.
         </div>
     </body>
 

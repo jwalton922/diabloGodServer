@@ -155,3 +155,9 @@ body > #wrap {height: auto; min-height: 100%;}
 .subnav {
 	height: 32px;
 }
+.ui-scrollfix {
+	position: fixed;
+	top: 0px;
+	width: 100%;
+	z-index: 1000;
+}

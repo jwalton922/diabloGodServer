@@ -10,6 +10,7 @@ function DiabloController($scope, $log, $http, $rootScope, appConstants) {
     $scope.affixMap = {};
     $scope.currentSelection = null;
     $scope.previousSelections = [];
+    $scope.showLandingPage = true;
 
     $scope.resetSelectionMenu = function(){
         $scope.currentSelection = null;
@@ -337,6 +338,7 @@ function DiabloController($scope, $log, $http, $rootScope, appConstants) {
         success(function(data, status, headers, config){
             $log.log("Success! data from server: "+angular.toJson(data));
             $scope.processing = false;
+            $scope.showLandingPage = false;
             $scope.rankGt = data.stats["num_gt"];
             $scope.rankLt = data.stats["num_lt"];
             $scope.accountEliteKillsGt = data.stats["acct_elite_avg"]["gt"];

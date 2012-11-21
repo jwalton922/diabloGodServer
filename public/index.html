@@ -1,55 +1,77 @@
 <!DOCTYPE html>
 <html ng-app="diabloApp">
+    
     <head>
-        <title>Diablo Item Evaluator</title>
+        <title>
+            Diablo Item Evaluator
+        </title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <meta name = "format-detection" content = "telephone=no"/>
-        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="keywords" content="diablo diablo3 items statistics stats info top best gold battletag pve character player ranking loot statistic big data" />
-
-
-        <!--link rel="stylesheet" type="text/css" href="lib/bootstrap/css/bootstrap.min.css" /-->
+        <meta name="keywords" content="diablo diablo3 items statistics stats info top best gold battletag pve character player ranking loot statistic big data"/>
+        <!--link rel="stylesheet" type="text/css" href="lib/bootstrap/css/bootstrap.min.css"
+        /-->
         <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
-        <link rel="stylesheet" type="text/css" href="lib/bootstrap/css/bootstrap-responsive.min.css" />
-        <link rel="stylesheet" type="text/css" href="lib/select2/select2.css" />
-        <link rel="stylesheet" type="text/css" href="lib/angular-ui/angular-ui.min.css" />
+        <link rel="stylesheet" type="text/css" href="lib/bootstrap/css/bootstrap-responsive.min.css"/>
+        <link rel="stylesheet" type="text/css" href="lib/select2/select2.css"/>
+        <link rel="stylesheet" type="text/css" href="lib/angular-ui/angular-ui.min.css"/>
         <link rel="stylesheet" type="text/css" href="css/app.css" />
-        <script src="lib/jquery-1.7.2.min.js"></script>
-        <script src="lib/bootstrap/js/bootstrap.min.js"></script>
-        <script src="lib/angular/angular.min.js"></script>
-        <script src="lib/angular/angular-resource.min.js"></script>
-        <script src="lib/angular-ui/angular-ui.min.js"></script>
-        <script src="lib/underscore-min.js" type="text/javascript"></script>
-        <script src="lib/jqplot/jquery.jqplot.min.js" type="text/javascript"></script>
-        <script src="lib/select2/select2.min.js" type="text/javascript"></script>
-        <script type="text/javascript" src="lib/jqplot/plugins/jqplot.barRenderer.min.js"></script>
-        <script type="text/javascript" src="lib/jqplot/plugins/jqplot.categoryAxisRenderer.min.js"></script>
-        <script type="text/javascript" src="lib/jqplot/plugins/jqplot.pointLabels.min.js"></script>
-        <script type="text/javascript" src="lib/jqplot/plugins/jqplot.canvasAxisTickRenderer.min.js"></script>
-        <script type="text/javascript" src="lib/jqplot/plugins/jqplot.canvasTextRenderer.min.js"></script>
-
+        <script src="lib/jquery-1.7.2.min.js">
+        </script>
+        <script src="lib/bootstrap/js/bootstrap.min.js">
+        </script>
+        <script src="lib/angular/angular.min.js">
+        </script>
+        <script src="lib/angular/angular-resource.min.js">
+        </script>
+        <script src="lib/angular-ui/angular-ui.min.js">
+        </script>
+        <script src="lib/underscore-min.js" type="text/javascript">
+        </script>
+        <script src="lib/jqplot/jquery.jqplot.min.js" type="text/javascript">
+        </script>
+        <script src="lib/select2/select2.min.js" type="text/javascript">
+        </script>
+        <script type="text/javascript" src="lib/jqplot/plugins/jqplot.barRenderer.min.js">
+        </script>
+        <script type="text/javascript" src="lib/jqplot/plugins/jqplot.categoryAxisRenderer.min.js">
+        </script>
+        <script type="text/javascript" src="lib/jqplot/plugins/jqplot.pointLabels.min.js">
+        </script>
+        <script type="text/javascript" src="lib/jqplot/plugins/jqplot.canvasAxisTickRenderer.min.js">
+        </script>
+        <script type="text/javascript" src="lib/jqplot/plugins/jqplot.canvasTextRenderer.min.js">
+        </script>
         <!-- include application js -->
-        <script src="js/attrMap.js" type="text/javascript"></script>
-        <script src="js/app.js" type="text/javascript"></script>
-        <script src="js/controllers.js" type="text/javascript"></script>
-        <script src="js/directives.js" type="text/javascript"></script>
-        <script src="js/filters.js" type="text/javascript"></script>
-        <script src="js/services.js" type="text/javascript"></script>
+        <script src="js/attrMap.js" type="text/javascript">
+        </script>
+        <script src="js/app.js" type="text/javascript">
+        </script>
+        <script src="js/controllers.js" type="text/javascript">
+        </script>
+        <script src="js/directives.js" type="text/javascript">
+        </script>
+        <script src="js/filters.js" type="text/javascript">
+        </script>
+        <script src="js/services.js" type="text/javascript">
+        </script>
         <script type="text/javascript">
-
-           var _gaq = _gaq || [];
+                   var _gaq = _gaq || [];
            _gaq.push(['_setAccount', 'UA-36365410-1']);
            _gaq.push(['_trackPageview']);
 
            (function() {
-              var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-              ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-               var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-            })();
-
-          </script>
+               var ga = document.createElement('script');
+               ga.type = 'text/javascript';
+               ga.async = true;
+               ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+               var s = document.getElementsByTagName('script')[0];
+               s.parentNode.insertBefore(ga, s);
+           })();
+        </script>
     </head>
+    
     <body ng-controller="DiabloController" ng-init="init()">
         <div id="wrap">
             <div id="main" class="container-fluid clearfix">
@@ -59,8 +81,8 @@
                     </div>
                 </div>
                 <div class="row-fluid">
-                    <div class="subnav">
-                        <ul class="nav nav-pills">
+                    <div class="subnav" ui-scrollfix="50">
+                        <ul class="nav nav-pills ">
                             <li class="active">
                                 <a href="/">Items</a>
                             </li>
@@ -84,89 +106,169 @@
                 </div>
                 <div class="row-fluid">
                     <div id="attributes" class="span4">
-                        <div class="metal"></div>
+                        <div class="metal">
+                        </div>
                         <div class="box">
-                            <!-- Side bar content --> 
-                            <label class="control-label">Class</label>
-                            <select ng-model="selectedClass" ng-options="classz for classz in charClass"></select>
-                            
-                            <label class="control-label">Slot</label>
-                            <select ng-model="selectedSlot" ng-options="slot for slot in slots"></select>
-                            
-
-                            <label class="control-label">Attributes</label>
-                            <div class="form-inline" ng-repeat="attr in providedAttributes"> 
+                            <!-- Side bar content -->
+                            <label class="control-label">
+                                Class
+                            </label>
+                            <select ng-model="selectedClass" ng-options="classz for classz in charClass">
+                            </select>
+                            <label class="control-label">
+                                Slot
+                            </label>
+                            <select ng-model="selectedSlot" ng-options="slot for slot in slots">
+                            </select>
+                            <label class="control-label">
+                                Attributes
+                            </label>
+                            <div class="form-inline" ng-repeat="attr in providedAttributes">
                                 <select ui-select2 class="span6" ng-model="attr.name">
-                                    <option value="">Select Attribute</option>
-                                    <option ng-repeat="attrName in availbleAttrs">{{attrName | caps}}</option>
+                                    <option value="">
+                                        Select Attribute
+                                    </option>
+                                    <option ng-repeat="attrName in availbleAttrs">
+                                        {{attrName | caps}}
+                                    </option>
                                 </select>
                                 <input type="text" class="input-mini" ng-model="attr.value" placeholder="0">
                             </div>
-                            <button class="btn btn-danger" ng-click=submitAttributes()>Search</button>
+                            <button class="btn btn-danger" ng-click=submitAttributes()>
+                                Search
+                            </button>
                         </div>
-                     </div>
-                     <div class="span8">
-                        <div class="metal"></div>
+                    </div>
+                    <div class="span8">
+                        <div class="metal">
+                        </div>
                         <div id="statistics" class="box">
                             <div id="reportcard">
                                 <div class="row-fluid">
-                                    <div class="span12">
+                                    <div class="span12" ng-show="showLandingPage">
+                                        <p class="lead">
+                                            DiabloItem.info is a site applying the principals of "big data" analytics
+                                            to Diablo 3. We are continuously gathering data to provide you with as
+                                            much interesting information as we can.
+                                        </p>
+                                        <p class="lead">
+                                            To the left is the Item Evaluator. It will show you not only the rank
+                                            of your item, but information about the heroes that have better and worse
+                                            items. For instance, you will see average paragon levels, elite kills,
+                                            progress, and more. Give it a try!
+                                        </p>
+                                        <p class="lead">
+                                            We also have crunched some data and have some general statistics on the
+                                            hero population by class. You can see the average character stats as well
+                                            as most common item attributes per slot. Check out the class pages for
+                                            this info: Barbarian, Demon Hunter, Monk, Witch Doctor, Wizard.
+                                        </p>
+                                    </div>
+                                    <div class="span12" ng-hide="showLandingPage">
                                         <table class="table">
                                             <tr>
-                                                <th>Statistic</th>
-                                                <th>For better items</th>
-                                                <th>For worse items</th>
+                                                <th>
+                                                    Statistic
+                                                </th>
+                                                <th>
+                                                    For better items
+                                                </th>
+                                                <th>
+                                                    For worse items
+                                                </th>
                                             </tr>
                                             <tr>
-                                                <td>Rank:</td>
-                                                <td>{{rankGt}}</td>
-                                                <td>{{rankLt}}</td>
+                                                <td>
+                                                    Rank:
+                                                </td>
+                                                <td>
+                                                    {{rankGt}}
+                                                </td>
+                                                <td>
+                                                    {{rankLt}}
+                                                </td>
                                             </tr>
                                             <tr>
-                                                <td>Avg Account Elite Kills:</td>
-                                                <td>{{accountEliteKillsGt}}</td>
-                                                <td>{{accountEliteKillsLt}}</td>
+                                                <td>
+                                                    Avg Account Elite Kills:
+                                                </td>
+                                                <td>
+                                                    {{accountEliteKillsGt}}
+                                                </td>
+                                                <td>
+                                                    {{accountEliteKillsLt}}
+                                                </td>
                                             </tr>
                                             <tr>
-                                                <td>Avg Char Elite Kills:</td>
-                                                <td>{{characterEliteKillsGt}}</td>
-                                                <td>{{characterEliteKillsLt}}</td>
+                                                <td>
+                                                    Avg Char Elite Kills:
+                                                </td>
+                                                <td>
+                                                    {{characterEliteKillsGt}}
+                                                </td>
+                                                <td>
+                                                    {{characterEliteKillsLt}}
+                                                </td>
                                             </tr>
                                             <tr>
-                                                <td>Avg Account Paragon Level:</td>
-                                                <td>{{accountParagonLevelGt}}</td>
-                                                <td>{{accountParagonLevelLt}}</td>
+                                                <td>
+                                                    Avg Account Paragon Level:
+                                                </td>
+                                                <td>
+                                                    {{accountParagonLevelGt}}
+                                                </td>
+                                                <td>
+                                                    {{accountParagonLevelLt}}
+                                                </td>
                                             </tr>
                                             <tr>
-                                                <td>Avg Char Paragon Level:</td>
-                                                <td>{{characterParagonLevelGt}}</td>
-                                                <td>{{characterParagonLevelLt}}</td>
+                                                <td>
+                                                    Avg Char Paragon Level:
+                                                </td>
+                                                <td>
+                                                    {{characterParagonLevelGt}}
+                                                </td>
+                                                <td>
+                                                    {{characterParagonLevelLt}}
+                                                </td>
                                             </tr>
                                         </table>
-                                        Estimated Gold Earned: {{estGoldEarned}} <br />
+                                        Estimated Gold Earned: {{estGoldEarned}}
+                                        <br />
                                     </div>
                                 </div>
                             </div>
-
                             <div ng-show="processing" class="top-gapl">
-                                <h3>Searching items...</h3>
+                                <h3>
+                                    Searching items...
+                                </h3>
                                 <div class="progress progress-striped progress-danger active top-gaps">
-                                    <div class="bar" style="width: 100%;"></div>
+                                    <div class="bar" style="width: 100%;">
+                                    </div>
                                 </div>
                             </div>
-
-                            <div id="acctEliteKillsGt" class="top-gapl"></div>
-                            <div id="acctEliteKillsLt" class="top-gap"></div>
-                            <div id="acctPlvlGt" class="top-gap"></div>
-                            <div id="acctPlvlLt" class="top-gap"></div>
+                            <div id="acctEliteKillsGt" class="top-gapl">
+                            </div>
+                            <div id="acctEliteKillsLt" class="top-gap">
+                            </div>
+                            <div id="acctPlvlGt" class="top-gap">
+                            </div>
+                            <div id="acctPlvlLt" class="top-gap">
+                            </div>
                         </div>
-                     </div>
-                 </div>
+                    </div>
+                </div>
             </div>
             <div id="footer">
-                <div id="legalnotice">Diablo® and Blizzard Entertainment® are all trademarks or registered trademarks of Blizzard Entertainment in the United States and/or other countries. These terms and all related materials, logos, and images are copyright © Blizzard Entertainment. This site is in no way associated with or endorsed by Blizzard Entertainment®.</div>
+                <div id="legalnotice">
+                    Diablo® and Blizzard Entertainment® are all trademarks or registered trademarks
+                    of Blizzard Entertainment in the United States and/or other countries.
+                    These terms and all related materials, logos, and images are copyright
+                    © Blizzard Entertainment. This site is in no way associated with or endorsed
+                    by Blizzard Entertainment®.
+                </div>
             </div>
         </div>
-        
     </body>
+
 </html>

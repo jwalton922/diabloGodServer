@@ -4,6 +4,21 @@
 
 function DiabloStatController($scope, $log, $http, $rootScope, appConstants) {
 
+    $scope.avgParagonLvl = {};
+    $scope.avgEliteKills = {};
+    $scope.charStats = {};
+    $scope.statColumns = [];
+    $scope.statColumn1 = [];
+    $scope.statColumn2 = [];
+    $scope.statColumn3 = [];
+    $scope.statColumn4 = [];
+    $scope.statColumns.push($scope.statColumn1);
+    $scope.statColumns.push($scope.statColumn2);
+    $scope.statColumns.push($scope.statColumn3);
+    $scope.statColumns.push($scope.statColumn4);
+    $scope.heroClassName = $("#hero-class").text();
+    $scope.heroClass = {};
+
 	$scope.init = function(){
 		var paramData = {};
 		paramData["callback"] = "JSON_CALLBACK"
@@ -28,9 +43,9 @@ function DiabloStatController($scope, $log, $http, $rootScope, appConstants) {
            // $log.log("Success! data from server: "+angular.toJson(data));
             for(var i = 0; i < data.length; i++){
             	if(data[i]["analytic-name"] === "diablo.analysis.analytics.AccountParagonLevelAnalytic"){
-            		$scope.processParagonLevels(data[i]);
+            		//$scope.processParagonLevels(data[i]);
             	} else if(data[i]["analytic-name"] === "diablo.analysis.analytics.AccountKillsAnalytic"){
-        			$scope.processAccountKills(data[i]);
+        			//$scope.processAccountKills(data[i]);
             	} else if(data[i]["analytic-name"] === "diablo.analysis.analytics.CharacterStatsAnalytic"){
             		$scope.processCharacterStats(data[i]);
             	} else if(data[i]["analytic-name"] === "diablo.analysis.analytics.ItemAttributeCommonalityAnalytic"){
@@ -39,8 +54,8 @@ function DiabloStatController($scope, $log, $http, $rootScope, appConstants) {
             	
             } 
 
-            $scope.createBarChart("paragonLevelChart", "Paragon Levels", $scope.avgParagonLvl.bins);
-            $scope.createBarChart("eliteKillsChart", "Elite Kills", $scope.avgEliteKills.bins);
+            //$scope.createBarChart("paragonLevelChart", "Paragon Levels", $scope.avgParagonLvl.bins);
+            //$scope.createBarChart("eliteKillsChart", "Elite Kills", $scope.avgEliteKills.bins);
 
         }).error(function(data, status, headers, config){
             $log.log("Error :(");
@@ -52,20 +67,18 @@ function DiabloStatController($scope, $log, $http, $rootScope, appConstants) {
 	$scope.processItemStats = function(data){
 		//$log.log("Processing item stats: "+angular.toJson(data));
 		$log.log("processing item stats");
-		for(var i = 0; i < $scope.heroClasses.length; i++){
-			$log.log("looking for item stats for hero: "+$scope.heroClasses[i].statid)
-			if($scope.heroClasses[i].statid == "barbarian"){
-				$scope.heroClasses[i].itemStats = data.barbarian;
-			} else if($scope.heroClasses[i].statid == "demon-hunter"){
-				$scope.heroClasses[i].itemStats = data["demon-hunter"];
-			} else if($scope.heroClasses[i].statid == "monk"){
-				$log.log("found monk item stats");
-				$scope.heroClasses[i].itemStats = data.monk;
-			} else if($scope.heroClasses[i].statid == "witch-doctor"){
-				$scope.heroClasses[i].itemStats = data["witch-doctor"];
-			} else if($scope.heroClasses[i].statid == "wizard"){
-				$scope.heroClasses[i].itemStats = data.wizard;
-			}
+		$log.log("looking for item stats for hero: "+$scope.heroClassName)
+		if($scope.heroClassName == "barbarian"){
+			$scope.heroClass.itemStats = data.barbarian;
+		} else if($scope.heroClassName == "demon-hunter"){
+			$scope.heroClass.itemStats = data["demon-hunter"];
+		} else if($scope.heroClassName == "monk"){
+			$log.log("found monk item stats");
+			$scope.heroClass.itemStats = data.monk;
+		} else if($scope.heroClassName == "witch-doctor"){
+			$scope.heroClass.itemStats = data["witch-doctor"];
+		} else if($scope.heroClassName == "wizard"){
+			$scope.heroClass.itemStats = data.wizard;
 		}
 	}
 
@@ -73,21 +86,23 @@ function DiabloStatController($scope, $log, $http, $rootScope, appConstants) {
 		$log.log("Processing character stats: ");
 		var charStats = data.classToStatAvgMap;
 		for(var charClass in charStats){
-			for(var i = 0; i < $scope.heroClasses.length; i++){
-				if(charClass == $scope.heroClasses[i].statid){
-					$scope.heroClasses[i].stats = charStats[charClass];
-					var statsArray = [];
-					for(var statKey in $scope.heroClasses[i].stats){
-						$scope.heroClasses[i].stats[statKey] = Math.round($scope.heroClasses[i].stats[statKey] * 100 ) / 100.0
-						statsArray.push($scope.heroClasses[i].stats[statKey]);
+			if(charClass == $scope.heroClassName){
+				$scope.heroClass.stats = charStats[charClass];
+				var statsArray = [];
+				for(var statKey in $scope.heroClass.stats){
+					$scope.heroClass.stats[statKey] = Math.round($scope.heroClass.stats[statKey] * 100 ) / 100.0
+					statsArray.push({value: $scope.heroClass.stats[statKey], name: statKey});
+				}
+                console.log(angular.toJson($scope.statColumns));
+				for(var j = 0; j < 4; j++){
+                    $scope.statColumns[j] = [];
+                    console.log("J is: " + j);
+					for(var k = 0; k < 7; k++){
+						var index  = (j*7)+k;
+                        console.log("index is: " + index);
+						$scope.statColumns[j].push(statsArray[index]);
 					}
-
-					for(var j = 0; j < 4; j++){
-						for(var k = 0; k < 7; k++){
-							var index  = (j*7)+k;
-							$scope.statColumns[j].push(statsArray[index]);
-						}
-					}
+                    console.log("column  = " + angular.toJson($scope.statColumns[j]));
 				}
 			}
 		}
@@ -126,19 +141,6 @@ function DiabloStatController($scope, $log, $http, $rootScope, appConstants) {
 		}
 
 	}
-
-    $scope.avgParagonLvl = {};
-    $scope.avgEliteKills = {};
-    $scope.charStats = {};
-    $scope.statColumns = {};
-    $scope.statColumn1 = [];
-    $scope.statColumn2 = [];
-    $scope.statColumn3 = [];
-    $scope.statColumn4 = [];
-    $scope.statColumns[0] = $scope.statColumns1;
-    $scope.statColumns[1] = $scope.statColumns2;
-    $scope.statColumns[2] = $scope.statColumns3;
-    $scope.statColumns[3] = $scope.statColumns4;
 	
 
 	$scope.heroClasses = [{className: "Barbarian", img: "img/barb.jpeg", link: "#barbTab", tabClass : "active", statid: "barbarian"}, 

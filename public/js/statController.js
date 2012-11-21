@@ -76,8 +76,17 @@ function DiabloStatController($scope, $log, $http, $rootScope, appConstants) {
 			for(var i = 0; i < $scope.heroClasses.length; i++){
 				if(charClass == $scope.heroClasses[i].statid){
 					$scope.heroClasses[i].stats = charStats[charClass];
+					var statsArray = [];
 					for(var statKey in $scope.heroClasses[i].stats){
 						$scope.heroClasses[i].stats[statKey] = Math.round($scope.heroClasses[i].stats[statKey] * 100 ) / 100.0
+						statsArray.push($scope.heroClasses[i].stats[statKey]);
+					}
+
+					for(var j = 0; j < 4; j++){
+						for(var k = 0; k < 7; k++){
+							var index  = (j*7)+k;
+							$scope.statColumns[j].push(statsArray[index]);
+						}
 					}
 				}
 			}
@@ -121,6 +130,15 @@ function DiabloStatController($scope, $log, $http, $rootScope, appConstants) {
     $scope.avgParagonLvl = {};
     $scope.avgEliteKills = {};
     $scope.charStats = {};
+    $scope.statColumns = {};
+    $scope.statColumn1 = [];
+    $scope.statColumn2 = [];
+    $scope.statColumn3 = [];
+    $scope.statColumn4 = [];
+    $scope.statColumns[0] = $scope.statColumns1;
+    $scope.statColumns[1] = $scope.statColumns2;
+    $scope.statColumns[2] = $scope.statColumns3;
+    $scope.statColumns[3] = $scope.statColumns4;
 	
 
 	$scope.heroClasses = [{className: "Barbarian", img: "img/barb.jpeg", link: "#barbTab", tabClass : "active", statid: "barbarian"}, 

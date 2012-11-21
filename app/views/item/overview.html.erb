@@ -70,11 +70,13 @@
                                 <a ng-click="classTabClick(heroClass)" class="{{heroClass.tabClass}}" href="{{heroClass.link}}">{{heroClass.className}}</a>
                             </li>
                         </ul>
-
-                        <div class="tab-content span10">
+                    </div>
+                </div>
+                <div class="row-fluid">
+                        <div class="tab-content span12">
                             <div class="tab-pane {{heroClass.tabClass}}" ng-repeat="heroClass in heroClasses">
-                                <img src="{{heroClass.img}}" />
-                                <div class="span4">
+                                <!--<img src="{{heroClass.img}}" />-->
+                                <div class="span3">
                                 <table class="table table-bordered">
                                     <tr><th>Stat</th><th>Average</th></tr>
                                     <tr ng-repeat="(name,value) in heroClass.stats">
@@ -84,7 +86,7 @@
                                 </table>
                                 </div>
                                 <div class="row-fluid">
-                                    <div class="span10">
+                                    <div class="span9">
                                     <table class="table table-bordered">
                                         <tr><th>Slot</th></tr>
                                         <tr ng-repeat="(slot, attributeGroups) in heroClass.itemStats">
@@ -146,11 +148,9 @@
                                         </tr>
                                     <table>
                                 </div>
-                                </div>
-                                
+                                </div>  
                             </div>
                         </div>
-
                     </div>
                 </div>
                 <div class="row-fluid">

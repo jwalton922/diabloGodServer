@@ -57,76 +57,70 @@
                         <img src="img/logo.png">
                     </div>
                 </div>
-                <div id="popChargs" class="span12">
+                <!--<div id="popChargs" class="span12">
                      <span>Average Paragon Levels: {{avgParagonLvl.avgLevel}}</span>
                     <div id="paragonLevelChart"></div>
                     <span>Average Elite Kills: {{avgEliteKills.avg}}</span>
                     <div id="eliteKillsChart"></div>
-                </div>
+                </div>-->
                 <div class="row-fluid">
                     <div class="span12">
-                        <ul class="nav nav-tabs">
-                            <li ng-repeat="heroClass in heroClasses">
-                                <a ng-click="classTabClick(heroClass)" class="{{heroClass.tabClass}}" href="{{heroClass.link}}">{{heroClass.className}}</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="row-fluid">
-                        <div class="tab-content span12">
-                            <div class="tab-pane {{heroClass.tabClass}}" ng-repeat="heroClass in heroClasses">
-                                <!--<img src="{{heroClass.img}}" />-->
-                                <div class="row">
-                                    <div class="span3">
-                                        <table class="table table-bordered">
-                                            <tr><th>Stat</th><th>Average</th></tr>
-                                            <tr ng-repeat="stats in statColumn1">
-                                                <td>{{stats.name}}</td>
-                                                <td>{{stats.value}}</td>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                    <div class="span3">
-                                        <table class="table table-bordered">
-                                            <tr><th>Stat</th><th>Average</th></tr>
-                                            <tr ng-repeat="stats in statColumn2">
-                                                <td>{{stats.name}}</td>
-                                                <td>{{stats.value}}</td>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                    <div class="span3">
-                                        <table class="table table-bordered">
-                                            <tr><th>Stat</th><th>Average</th></tr>
-                                            <tr ng-repeat="stats in statColumn3">
-                                                <td>{{stats.name}}</td>
-                                                <td>{{stats.value}}</td>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                    <div class="span3">
-                                        <table class="table table-bordered">
-                                            <tr><th>Stat</th><th>Average</th></tr>
-                                            <tr ng-repeat="stats in statColumn4">
-                                                <td>{{stats.name}}</td>
-                                                <td>{{stats.value}}</td>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                </div>
-
-
-                                <div class="row-fluid">
-                                    <div class="span12">
+                        <div class="metal"></div>
+                        <div class="box">
+                            <div class="row-fluid">
+                                <div class="span3">
                                     <table class="table table-bordered">
-                                        <tr><th>Slot</th></tr>
+                                        <tr><th>Stat</th><th>Average</th></tr>
+                                        <tr ng-repeat="stats in statColumns[0]">
+                                            <td>{{stats.name}}</td>
+                                            <td>{{stats.value}}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div class="span3">
+                                    <table class="table table-bordered">
+                                        <tr><th>Stat</th><th>Average</th></tr>
+                                        <tr ng-repeat="stats in statColumns[1]">
+                                            <td>{{stats.name}}</td>
+                                            <td>{{stats.value}}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div class="span3">
+                                    <table class="table table-bordered">
+                                        <tr><th>Stat</th><th>Average</th></tr>
+                                        <tr ng-repeat="stats in statColumns[2]">
+                                            <td>{{stats.name}}</td>
+                                            <td>{{stats.value}}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div class="span3">
+                                    <table class="table table-bordered">
+                                        <tr><th>Stat</th><th>Average</th></tr>
+                                        <tr ng-repeat="stats in statColumns[3]">
+                                            <td>{{stats.name}}</td>
+                                            <td>{{stats.value}}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row-fluid top-gap">
+                            <div class="span12">
+                                <div class="metal"></div>
+                                <div class="box">
+                                    <h2>Most common attributes by slot:</h2>
+                                    <table class="table table-bordered">
+                                        <tr><th>Slot</th><th>Attribute groupings</th></tr>
                                         <tr ng-repeat="(slot, attributeGroups) in heroClass.itemStats">
                                             <td>{{slot}}</td>
                                             <td >
                                                 <table class="table table-bordered">
                                                     <tr>
                                                         <td><table>
-                                                                <tr><td>{{attributeGroups.twoAttribute.count}} items</td></tr>
+                                                                <tr><td><h4>{{attributeGroups.twoAttribute.count}} items have:</h4></td></tr>
                                                                 <tr ng-repeat="attr in attributeGroups.twoAttribute.attributes"><td>{{attr}}</td></tr>
                                                             </table>
                                                         </td>
@@ -137,7 +131,7 @@
                                                 <table class="table table-bordered">
                                                     <tr>
                                                         <td><table>
-                                                                <tr><td>{{attributeGroups.threeAttribute.count}} items</td></tr>
+                                                                <tr><td><h4>{{attributeGroups.threeAttribute.count}} items have:</h4></td></tr>
                                                                 <tr ng-repeat="attr in attributeGroups.threeAttribute.attributes"><td>{{attr}}</td></tr>
                                                             </table>
                                                         </td>
@@ -148,7 +142,7 @@
                                                 <table class="table table-bordered">
                                                     <tr>
                                                         <td><table>
-                                                                <tr><td>{{attributeGroups.fourAttribute.count}} items</td></tr>
+                                                                <tr><td><h4>{{attributeGroups.fourAttribute.count}} items have:</h4></td></tr>
                                                                 <tr ng-repeat="attr in attributeGroups.fourAttribute.attributes"><td>{{attr}}</td></tr>
                                                             </table>
                                                         </td>                                                        
@@ -159,7 +153,7 @@
                                                 <table class="table table-bordered">
                                                     <tr>
                                                         <td><table>
-                                                                <tr><td>{{attributeGroups.fiveAttribute.count}} items</td></tr>
+                                                                <tr><td><h4>{{attributeGroups.fiveAttribute.count}} items have:</h4></td></tr>
                                                                 <tr ng-repeat="attr in attributeGroups.fiveAttribute.attributes"><td>{{attr}}</td></tr>
                                                             </table>
                                                         </td>
@@ -177,10 +171,11 @@
                                                 </table>
                                             </td> -->
                                         </tr>
-                                    <table>
+                                    </table>
                                 </div>
-                                </div>  
                             </div>
+                        </div>  
+                    </div>
                         </div>
                     </div>
                 </div>
@@ -193,6 +188,6 @@
                 <div id="legalnotice">Diablo® and Blizzard Entertainment® are all trademarks or registered trademarks of Blizzard Entertainment in the United States and/or other countries. These terms and all related materials, logos, and images are copyright © Blizzard Entertainment. This site is in no way associated with or endorsed by Blizzard Entertainment®.</div>
             </div>
         </div>
-        
+        <div id="hero-class" style="display: none">barbarian</div>
     </body>
 </html>

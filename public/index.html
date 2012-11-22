@@ -70,6 +70,17 @@
                s.parentNode.insertBefore(ga, s);
            })();
         </script>
+        <!--[if lte IE 8]>
+<script>
+// The ieshiv takes care of our ui.directives, bootstrap module directives and
+// AngularJS's ng-view, ng-include, ng-pluralize and ng-switch directives.
+// However, IF you have custom directives (yours or someone else's) then
+// enumerate the list of tags in window.myCustomTags
+ 
+window.myCustomTags = [ 'yourDirective', 'somebodyElsesDirective' ]; // optional
+</script>
+<script src="build/angular-ui-ieshiv.js"></script>
+<![endif]-->
     </head>
     
     <body ng-controller="DiabloController" ng-init="init()">
@@ -242,7 +253,7 @@
                             </div>
                             <div ng-show="processing" class="top-gapl">
                                 <h3>
-                                    Evaluating items...
+                                    Evaluating items...this could literally take a minute (Sorry, working on breeding faster hamsters for the server farm)
                                 </h3>
                                 <div class="progress progress-striped progress-danger active top-gaps">
                                     <div class="bar" style="width: 100%;">

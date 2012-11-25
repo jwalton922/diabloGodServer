@@ -112,3 +112,5 @@
   affixes["ray_of_frost"] = "Power_Crit_Percent_Bonus#Wizard_RayOfFrost";
   affixes["spectral_blade"] = "Power_Damage_Percent_Bonus#Wizard_SpectralBlade";
   affixes["shock_pulse"] = "Power_Damage_Percent_Bonus#Wizard_ShockPulse";
+
+  

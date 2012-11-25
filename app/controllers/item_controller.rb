@@ -382,7 +382,7 @@ class ItemController < ApplicationController
     convert_values_to_percentages(character_paragon_levels[mapIndex], it_count)
     convert_values_to_percentages(account_paragon_levels[mapIndex], it_count)
     convert_values_to_percentages(account_elite_kills[mapIndex], it_count)
-    convert_values_to_percentages(account_elite_kills[mapIndex], it_count)
+    convert_values_to_percentages(character_elite_kills[mapIndex], it_count)
     convert_values_to_percentages(character_progress_data[mapIndex], it_count)
     convert_values_to_percentages(account_progress_data[mapIndex], it_count)
 

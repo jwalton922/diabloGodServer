@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html ng-app="diabloApp">
+    
+    <head>
+        <title>
+            Coming Soon to diabloitem.info
+        </title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Frequently asked questions concerning diabloitem.info" />
+        <meta name="keywords" content="diablo diablo3 items statistics stats info top best gold battletag pve character player ranking loot statistic big data"/>
+        <!--link rel="stylesheet" type="text/css" href="lib/bootstrap/css/bootstrap.min.css"
+        /-->
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+        <link rel="stylesheet" type="text/css" href="lib/bootstrap/css/bootstrap-responsive.min.css"/>
+        <link rel="stylesheet" type="text/css" href="lib/select2/select2.css"/>
+        <link rel="stylesheet" type="text/css" href="lib/angular-ui/angular-ui.min.css"/>
+        <link rel="stylesheet" type="text/css" href="css/app.css" />
+        <script src="lib/jquery-1.7.2.min.js">
+        </script>
+        <script src="lib/bootstrap/js/bootstrap.min.js">
+        </script>
+        <script src="lib/angular/angular.min.js">
+        </script>
+        <script src="lib/angular/angular-resource.min.js">
+        </script>
+        <script src="lib/angular-ui/angular-ui.min.js">
+        </script>
+        <script src="lib/underscore-min.js" type="text/javascript">
+        </script>
+        <script src="lib/jqplot/jquery.jqplot.min.js" type="text/javascript">
+        </script>
+        <script src="lib/select2/select2.min.js" type="text/javascript">
+        </script>
+        <script type="text/javascript" src="lib/jqplot/plugins/jqplot.barRenderer.min.js">
+        </script>
+        <script type="text/javascript" src="lib/jqplot/plugins/jqplot.categoryAxisRenderer.min.js">
+        </script>
+        <script type="text/javascript" src="lib/jqplot/plugins/jqplot.pointLabels.min.js">
+        </script>
+        <script type="text/javascript" src="lib/jqplot/plugins/jqplot.canvasAxisTickRenderer.min.js">
+        </script>
+        <script type="text/javascript" src="lib/jqplot/plugins/jqplot.canvasTextRenderer.min.js">
+        </script>
+        <script type="text/javascript" src="lib/jqplot/plugins/jqplot.canvasAxisLabelRenderer.min.js">
+        </script>
+        <!-- include application js -->
+        <script src="js/attrMap.js" type="text/javascript">
+        </script>
+        <script src="js/app.js" type="text/javascript">
+        </script>
+        <script src="js/controllers.js" type="text/javascript">
+        </script>
+        <script src="js/directives.js" type="text/javascript">
+        </script>
+        <script src="js/filters.js" type="text/javascript">
+        </script>
+        <script src="js/services.js" type="text/javascript">
+        </script>
+        <script type="text/javascript">
+                   var _gaq = _gaq || [];
+           _gaq.push(['_setAccount', 'UA-36365410-1']);
+           _gaq.push(['_trackPageview']);
+
+           (function() {
+               var ga = document.createElement('script');
+               ga.type = 'text/javascript';
+               ga.async = true;
+               ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+               var s = document.getElementsByTagName('script')[0];
+               s.parentNode.insertBefore(ga, s);
+           })();
+        </script>
+        <!--[if lte IE 8]>
+<script>
+// The ieshiv takes care of our ui.directives, bootstrap module directives and
+// AngularJS's ng-view, ng-include, ng-pluralize and ng-switch directives.
+// However, IF you have custom directives (yours or someone else's) then
+// enumerate the list of tags in window.myCustomTags
+ 
+window.myCustomTags = [ 'yourDirective', 'somebodyElsesDirective' ]; // optional
+</script>
+<script src="build/angular-ui-ieshiv.js"></script>
+<![endif]-->
+    </head>
+    
+    <body ng-controller="DiabloController" ng-init="init()">
+        <div id="wrap">
+            <div id="main" class="container-fluid clearfix">
+                <div class="row-fluid">
+                    <div class="span12">
+                        <a href="/"><img src="img/logo.png"></a>
+                    </div>
+                </div>
+                <div class="row-fluid">
+                    <div class="subnav" ui-scrollfix="50">
+                        <ul class="nav nav-pills ">
+                            <li>
+                                <a href="/">Items</a>
+                            </li>
+                            <li>
+                                <a href="barbarian.html">Barbarian</a>
+                            </li>
+                            <li>
+                                <a href="demonhunter.html">Demon Hunter</a>
+                            </li>
+                            <li>
+                                <a href="monk.html">Monk</a>
+                            </li>
+                            <li>
+                                <a href="witchdoctor.html">Witch Doctor</a>
+                            </li>
+                            <li>
+                                <a href="wizard.html">Wizard</a>
+                            </li>
+                            <li>
+                                <a href="comingsoon.html">Coming Soon</a>
+                            </li>
+                            <li class="active">
+                                <a href="#">FAQ</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="row-fluid">
+                    <div class="span12">
+                        <div class="metal"></div>
+                        <h2>Frequently Asked Questions:</h3>
+                        <ul>
+                            <li><h3>Where does your information come from?</h3>We gather our information from <a href="http://us.battle.net/d3/en/forum/topic/6246876981">Blizzard's API</a></li>
+                            <li><h3>What do you mean by "applying the principals of "big data" analytics to Diablo 3"?</h3>Big data is all about recording as much information as possible and then mining that data for interesting information.  We are continuously gathering information and storing it.  This allows us to not only provide you with all the current information, but show trends over time.  We have not implemented all our analytics yet, and we will surely think of others.  Since we store all the data, we can run any new analytics on our stored data.</li>
+                            <li><h3>The information provided seems interesting, but how exactly is the information helpful?</h3>This site provides an insight into the Diablo 3 population.  This information, as fans of the game, is inherently interesting to us, but can also be useful for "playing the game". <br /> For example, selling items in the Auction House can be frustrating.  Even though an item is listed for a competitive price compared to other similar items, it will frequenly not sell.  Maybe the majority of players already have a better item, or maybe you are listing it for more money than the players it woulde be useful for have.The <a href="/">Item Evaluator</a> can provide information about the market an item would be useful for.  It can show you what percentage of players would be interested in it as well as how much money they might have based on their play time (inferred from elite kills, paragon level, etc).</li>
+                            <li><h3>Why are somethings slow?</h3>We are currently using the free tier from different hosting services.  The analytics, such as the item evaluator, are not precomputed and require quite a bit of processing power.  We have plans to upgrade our hosting soon, but it is expensive.  We will be starting a kick starter project soon to help raise money.  We'll update this page when that is launched.</li>
+                            <li><h3>Something did not work, what happened?</h3>We are still in development.  If you run across any errors, problems, or information that does not look correct, please email us at acheevos@acheevos.com and we'll fix it as soon as we can!</li>
+                            <li><h3>I have more questions!</h3>Please contact us at acheevos@acheevos.com, and we will answer any other questions you have as soon as we can!</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div id="footer">
+                <div id="legalnotice">
+                    Diablo® and Blizzard Entertainment® are all trademarks or registered trademarks
+                    of Blizzard Entertainment in the United States and/or other countries.
+                    These terms and all related materials, logos, and images are copyright
+                    © Blizzard Entertainment. This site is in no way associated with or endorsed
+                    by Blizzard Entertainment®.
+                </div>
+            </div>
+        </div>
+    </body>
+
+</html>

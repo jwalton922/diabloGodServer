@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html ng-app="diabloApp">
+    
+    <head>
+        <title>
+            Coming Soon to diabloitem.info
+        </title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Information about upcoming features for diabloitem.info" />
+        <meta name="keywords" content="diablo diablo3 items statistics stats info top best gold battletag pve character player ranking loot statistic big data"/>
+        <!--link rel="stylesheet" type="text/css" href="lib/bootstrap/css/bootstrap.min.css"
+        /-->
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+        <link rel="stylesheet" type="text/css" href="lib/bootstrap/css/bootstrap-responsive.min.css"/>
+        <link rel="stylesheet" type="text/css" href="lib/select2/select2.css"/>
+        <link rel="stylesheet" type="text/css" href="lib/angular-ui/angular-ui.min.css"/>
+        <link rel="stylesheet" type="text/css" href="css/app.css" />
+        <script src="lib/jquery-1.7.2.min.js">
+        </script>
+        <script src="lib/bootstrap/js/bootstrap.min.js">
+        </script>
+        <script src="lib/angular/angular.min.js">
+        </script>
+        <script src="lib/angular/angular-resource.min.js">
+        </script>
+        <script src="lib/angular-ui/angular-ui.min.js">
+        </script>
+        <script src="lib/underscore-min.js" type="text/javascript">
+        </script>
+        <script src="lib/jqplot/jquery.jqplot.min.js" type="text/javascript">
+        </script>
+        <script src="lib/select2/select2.min.js" type="text/javascript">
+        </script>
+        <script type="text/javascript" src="lib/jqplot/plugins/jqplot.barRenderer.min.js">
+        </script>
+        <script type="text/javascript" src="lib/jqplot/plugins/jqplot.categoryAxisRenderer.min.js">
+        </script>
+        <script type="text/javascript" src="lib/jqplot/plugins/jqplot.pointLabels.min.js">
+        </script>
+        <script type="text/javascript" src="lib/jqplot/plugins/jqplot.canvasAxisTickRenderer.min.js">
+        </script>
+        <script type="text/javascript" src="lib/jqplot/plugins/jqplot.canvasTextRenderer.min.js">
+        </script>
+        <script type="text/javascript" src="lib/jqplot/plugins/jqplot.canvasAxisLabelRenderer.min.js">
+        </script>
+        <!-- include application js -->
+        <script src="js/attrMap.js" type="text/javascript">
+        </script>
+        <script src="js/app.js" type="text/javascript">
+        </script>
+        <script src="js/controllers.js" type="text/javascript">
+        </script>
+        <script src="js/directives.js" type="text/javascript">
+        </script>
+        <script src="js/filters.js" type="text/javascript">
+        </script>
+        <script src="js/services.js" type="text/javascript">
+        </script>
+        <script type="text/javascript">
+                   var _gaq = _gaq || [];
+           _gaq.push(['_setAccount', 'UA-36365410-1']);
+           _gaq.push(['_trackPageview']);
+
+           (function() {
+               var ga = document.createElement('script');
+               ga.type = 'text/javascript';
+               ga.async = true;
+               ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+               var s = document.getElementsByTagName('script')[0];
+               s.parentNode.insertBefore(ga, s);
+           })();
+        </script>
+        <!--[if lte IE 8]>
+<script>
+// The ieshiv takes care of our ui.directives, bootstrap module directives and
+// AngularJS's ng-view, ng-include, ng-pluralize and ng-switch directives.
+// However, IF you have custom directives (yours or someone else's) then
+// enumerate the list of tags in window.myCustomTags
+ 
+window.myCustomTags = [ 'yourDirective', 'somebodyElsesDirective' ]; // optional
+</script>
+<script src="build/angular-ui-ieshiv.js"></script>
+<![endif]-->
+    </head>
+    
+    <body ng-controller="DiabloController" ng-init="init()">
+        <div id="wrap">
+            <div id="main" class="container-fluid clearfix">
+                <div class="row-fluid">
+                    <div class="span12">
+                        <a href="/"><img src="img/logo.png"></a>
+                    </div>
+                </div>
+                <div class="row-fluid">
+                    <div class="subnav" ui-scrollfix="50">
+                        <ul class="nav nav-pills ">
+                            <li>
+                                <a href="/">Items</a>
+                            </li>
+                            <li>
+                                <a href="barbarian.html">Barbarian</a>
+                            </li>
+                            <li>
+                                <a href="demonhunter.html">Demon Hunter</a>
+                            </li>
+                            <li>
+                                <a href="monk.html">Monk</a>
+                            </li>
+                            <li>
+                                <a href="witchdoctor.html">Witch Doctor</a>
+                            </li>
+                            <li>
+                                <a href="wizard.html">Wizard</a>
+                            </li>
+                            <li class="active">
+                                <a href="#">Coming Soon</a>
+                            </li>
+                            <li>
+                                <a href="faq.html">FAQ</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="row-fluid">
+                    <div class="span12">
+                        <div class="metal"></div>
+                        <h2>Coming Soon</h3>
+                        <ul>
+                            <li><h3>Play time analysis:</h3>Since we are tracking information over time, we can determine exactly what has changed for a profile.  We will be able to determine things like: how much time was spent on a hero/account and frequency of item upgrades.  Aggregating that information we can get an idea into the health and status of Diablo 3.</li>
+                            <li><h3>Character analysis:</h3>We have information on tens of thousands of characters, and will provide a tool to rank a hero based on their stats and progress.</li>
+                            <li><h3>More Tools and Calculators</h3>The community has already developed a lot of good tools and calculators for things such as item scores, effective health pool, dps increases.  We hope to incorporate those as well as come up with our own!</li>
+                            <li><h3>Hardcore analysis:</h3>Blizzard's API provides some interesting information about Hardcore characters, including deceased heroes.  There should be a lot of interesting information to be gleaned from analyzing that data.</li>
+                            <li><h3>Even more:</h3>We plan to listen to your feedback and put together analytics to find the information you want!</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div id="footer">
+                <div id="legalnotice">
+                    Diablo® and Blizzard Entertainment® are all trademarks or registered trademarks
+                    of Blizzard Entertainment in the United States and/or other countries.
+                    These terms and all related materials, logos, and images are copyright
+                    © Blizzard Entertainment. This site is in no way associated with or endorsed
+                    by Blizzard Entertainment®.
+                </div>
+            </div>
+        </div>
+    </body>
+
+</html>

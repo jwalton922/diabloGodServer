@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html ng-app="diabloApp">
     <head>
-        <title>Diablo Item Evaluator</title>
+        <title>DiabloItem.info Barbarian Statistics</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name = "format-detection" content = "telephone=no"/>
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="General statistics about the Barbarian class in Diablo 3 including average DPS, paragon level, and most common item modifiers per slot." />
         <meta name="keywords" content="diablo diablo3 items statistics stats info top best gold battletag pve character player ranking loot statistic big data" />
 
 
@@ -27,6 +28,7 @@
         <script type="text/javascript" src="lib/jqplot/plugins/jqplot.pointLabels.min.js"></script>
         <script type="text/javascript" src="lib/jqplot/plugins/jqplot.canvasAxisTickRenderer.min.js"></script>
         <script type="text/javascript" src="lib/jqplot/plugins/jqplot.canvasTextRenderer.min.js"></script>
+        <script type="text/javascript" src="lib/jqplot/plugins/jqplot.canvasAxisLabelRenderer.min.js"></script>
 
         <!-- include application js -->
         <script src="js/attrMap.js" type="text/javascript"></script>
@@ -78,14 +80,48 @@
                             <li>
                                 <a href="wizard">Wizard</a>
                             </li>
+                            <li>
+                                <a href="comingsoon.html">Coming Soon</a>
+                            </li>
+                            <li>
+                                <a href="faq.html">FAQ</a>
+                            </li>
                         </ul>
+                    </div>
+                </div>
+                <div class="row-fluid">
+                    <div class="span12">
+                        <div class="metal"></div>             
+                        <div class="span3">
+                            General {{heroClassName}} Information.
+                            <ul>
+                                <li><a href="#statDiv">Average Stats</a></li>
+                                <li><a href="#itemDiv">Most Common Item Attributes</a></li>
+                            </ul>
+                            <br />
+                            <img src="{{heroClassImage}}" width="250" height="250" />
+                        </div>
+                        <div class="span3">
+                            <table class="table table-bordered">
+                                <tr><td>Count</td><td>{{classCount}}</td></tr>
+                                <tr><td>Average Paragon Level</td><td>{{classAvgParagonLvl}}</td></tr>
+                                <tr><td>Average Elite Kills</td><td>{{classAvgEliteKills}}</td></tr>
+                                <tr><td>Damage</td><td>{{classDps}}</td></tr>
+                                <tr><td>Life</td><td>{{classLife}}</td></tr>
+                            </table>
+                        </div>
+                        <div class="span5">
+                            <div id="classParagonLvls"></div>
+                        </div>
+
+                        
                     </div>
                 </div>
                 <div class="row-fluid">
                     <div class="span12">
                         <div class="metal"></div>
                         <div class="box">
-                            <div class="row-fluid">
+                            <div id="statDiv" class="row-fluid">
                                 <div class="span3">
                                     <table class="table table-bordered">
                                         <tr><th>Stat</th><th>Average</th></tr>
@@ -126,7 +162,7 @@
                         </div>
 
                         <div class="row-fluid top-gap">
-                            <div class="span12">
+                            <div id="itemDiv" class="span12">
                                 <div class="metal"></div>
                                 <div class="box">
                                     <h2>Most common attributes by slot:</h2>

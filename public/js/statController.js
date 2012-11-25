@@ -4,6 +4,12 @@
 
 function DiabloStatController($scope, $log, $http, $rootScope, appConstants) {
 
+    $scope.classDps = 0;
+    $scope.classLife = 0;
+    $scope.classAvgParagonLvl = 0;
+    $scope.classAvgEliteKills = 0;
+    $scope.classCount = 0;
+    $scope.classParagonBins = [];
     $scope.avgParagonLvl = {};
     $scope.avgEliteKills = {};
     $scope.charStats = {};
@@ -17,7 +23,20 @@ function DiabloStatController($scope, $log, $http, $rootScope, appConstants) {
     $scope.statColumns.push($scope.statColumn3);
     $scope.statColumns.push($scope.statColumn4);
     $scope.heroClassName = $("#hero-class").text();
+    $scope.heroClassImage = "";
+    if($scope.heroClassName === "barbarian"){
+        $scope.heroClassImage = "img/barb.jpeg"
+    } else if($scope.heroClassName === "demon-hunter"){
+        $scope.heroClassImage = "img/demonhunter.jpeg"
+    } else if($scope.heroClassName === "monk"){
+        $scope.heroClassImage = "img/monk.jpeg"
+    } else if($scope.heroClassName === "witch-doctor"){
+        $scope.heroClassImage = "img/witchdoctor.jpeg"
+    } else if($scope.heroClassName === "wizard"){
+        $scope.heroClassImage = "img/wizard.jpeg"
+    }
     $scope.heroClass = {};
+
 
 	$scope.init = function(){
 		var paramData = {};
@@ -40,7 +59,7 @@ function DiabloStatController($scope, $log, $http, $rootScope, appConstants) {
             headers: headerData
         }).
         success(function(data, status, headers, config){
-           // $log.log("Success! data from server: "+angular.toJson(data));
+           //$log.log("Success! data from server: "+angular.toJson(data));
             for(var i = 0; i < data.length; i++){
             	if(data[i]["analytic-name"] === "diablo.analysis.analytics.AccountParagonLevelAnalytic"){
             		//$scope.processParagonLevels(data[i]);
@@ -53,6 +72,8 @@ function DiabloStatController($scope, $log, $http, $rootScope, appConstants) {
             	} 
             	
             } 
+
+            $scope.calculatePercentOfItemStats($scope.heroClass.itemStats);
 
             //$scope.createBarChart("paragonLevelChart", "Paragon Levels", $scope.avgParagonLvl.bins);
             //$scope.createBarChart("eliteKillsChart", "Elite Kills", $scope.avgEliteKills.bins);
@@ -82,6 +103,22 @@ function DiabloStatController($scope, $log, $http, $rootScope, appConstants) {
 		}
 	}
 
+    $scope.calculatePercentOfItemStats = function(data){
+        $log.log("calculatePercentOfItemStats");
+        for(var slot in data){
+            var slotData = data[slot];
+            for(var attributeGroup in slotData){
+                var attributeGroupData = slotData[attributeGroup];
+                $log.log("attributeGroup: "+angular.toJson(attributeGroupData));
+                var count = attributeGroupData["count"];
+                $log.log("count = "+count);
+                var percent = count / (1.0 * $scope.classCount)*100;
+                percent = Math.round(percent *100) / 100.0;
+                attributeGroupData["count"] = percent;
+            }
+        }
+    }
+
 	$scope.processCharacterStats = function(data){
 		$log.log("Processing character stats: ");
 		var charStats = data.classToStatAvgMap;
@@ -90,22 +127,67 @@ function DiabloStatController($scope, $log, $http, $rootScope, appConstants) {
 				$scope.heroClass.stats = charStats[charClass];
 				var statsArray = [];
 				for(var statKey in $scope.heroClass.stats){
+                   // $log.log("stat key: "+statKey);
+                    if(statKey != null){
+                        if(statKey === "damage"){
+                            $scope.classDps = $scope.heroClass.stats[statKey];
+                            $scope.classDps = Math.round($scope.classDps*100.0)/ 100.0;
+                        } else if(statKey === "life"){
+                            $scope.classLife = $scope.heroClass.stats[statKey];
+                            $scope.classLife = Math.round($scope.classLife*100)/100.0;
+                        }
+                    }
 					$scope.heroClass.stats[statKey] = Math.round($scope.heroClass.stats[statKey] * 100 ) / 100.0
 					statsArray.push({value: $scope.heroClass.stats[statKey], name: statKey});
 				}
                 console.log(angular.toJson($scope.statColumns));
 				for(var j = 0; j < 4; j++){
                     $scope.statColumns[j] = [];
-                    console.log("J is: " + j);
+                    //console.log("J is: " + j);
 					for(var k = 0; k < 7; k++){
 						var index  = (j*7)+k;
-                        console.log("index is: " + index);
+                        //console.log("index is: " + index);
 						$scope.statColumns[j].push(statsArray[index]);
 					}
-                    console.log("column  = " + angular.toJson($scope.statColumns[j]));
+                    //console.log("column  = " + angular.toJson($scope.statColumns[j]));
 				}
 			}
 		}
+
+        var classCountMap = data.classToCountMap;
+        for(charClass in classCountMap){
+            if(charClass === $scope.heroClassName){
+                $scope.classCount = classCountMap[charClass];
+            }
+        }
+
+        var classAvgKillMap = data.classAvgEliteKillsMap;
+        for(charClass in classAvgKillMap){
+            if(charClass === $scope.heroClassName){
+                $scope.classAvgEliteKills = classAvgKillMap[charClass];
+                $scope.classAvgEliteKills = Math.round($scope.classAvgEliteKills*100)/100.0;
+            }
+        }
+        var classAvgParagonLvlMap = data.classAvgParagonLevels;
+        for(charClass in classAvgParagonLvlMap){
+            if(charClass === $scope.heroClassName){
+                $scope.classAvgParagonLvl = classAvgParagonLvlMap[charClass];
+                $scope.classAvgParagonLvl = Math.round($scope.classAvgParagonLvl*100)/100.0;
+            }
+        }
+
+        var classParagonBinsMap = data.classParagonLevelBins;
+        for(charClass in classParagonBinsMap){
+            if(charClass === $scope.heroClassName){
+                $scope.classParagonBins = classParagonBinsMap[charClass];
+                var paragonBins = []
+                for(var i = 0; i <= 100; i++){
+                    paragonBins.push(i);
+                
+                }
+                $scope.createBarChart("classParagonLvls", "Paragon Level Distribution" , $scope.classParagonBins, paragonBins, "Paragon Level 0-100", "Count");
+            }
+        }
 	}
 
 	$scope.processAccountKills = function(data){
@@ -161,7 +243,7 @@ function DiabloStatController($scope, $log, $http, $rootScope, appConstants) {
     	}
     }
 
- $scope.createBarChart = function(divId, title, arrayData){
+ $scope.createBarChart = function(divId, title, arrayData, ticks, xaxisLabel, yaxisLabel){
         $log.log("creating chart for: "+divId+" data: "+angular.toJson(arrayData));
         var chart = $.jqplot(divId, [arrayData], {
             // Only animate if we're not using excanvas (not in IE 7 or IE 8)..
@@ -182,9 +264,15 @@ function DiabloStatController($scope, $log, $http, $rootScope, appConstants) {
             axes: {
                 xaxis: {
                     renderer: $.jqplot.CategoryAxisRenderer,
+                    label: xaxisLabel,
+                    ticks: ticks,
                     tickOptions : {
-
+                        show: false
                     }
+                },
+                yaxis: {
+                    label: yaxisLabel,
+                    labelRenderer: $.jqplot.CanvasAxisLabelRenderer
                 }
             },
             highlighter: {

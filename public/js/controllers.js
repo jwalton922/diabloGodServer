@@ -125,7 +125,7 @@ function DiabloController($scope, $log, $http, $rootScope, appConstants) {
     $scope.affixMap["Proc Effects"] = $scope.procEffect;
     $scope.affixMap["Adventuring"] = $scope.adventuring;
 
-    $scope.createBarChart = function(divId, title, arrayData){
+    $scope.createBarChart = function(divId, title, arrayData, ticks, xaxisLabel, yaxisLabel){
         $log.log("creating chart for: "+divId+" data: "+angular.toJson(arrayData));
         var chart = $.jqplot(divId, [arrayData], {
             // Only animate if we're not using excanvas (not in IE 7 or IE 8)..
@@ -146,9 +146,15 @@ function DiabloController($scope, $log, $http, $rootScope, appConstants) {
             axes: {
                 xaxis: {
                     renderer: $.jqplot.CategoryAxisRenderer,
+                    label: xaxisLabel,
+                    ticks: ticks,
                     tickOptions : {
 
                     }
+                },
+                yaxis: {
+                    label: yaxisLabel,
+                    labelRenderer: $.jqplot.CanvasAxisLabelRenderer
                 }
             },
             highlighter: {
@@ -165,119 +171,17 @@ function DiabloController($scope, $log, $http, $rootScope, appConstants) {
                                     // CanvasGridRenderer takes no additional options.
             }
         });
-    }
-
-    $scope.createCharts2 = function(data){
-        var accountParagonLevels= $.jqplot('accountParagonLevel', [data["account_paragon_levels"]], {
-            // Only animate if we're not using excanvas (not in IE 7 or IE 8)..
-            animate: !$.jqplot.use_excanvas,
-            title: "Account Paragon Levels",
-            seriesColors : ["#CC0000"],
-            seriesDefaults:{
-                renderer:$.jqplot.BarRenderer,
-                pointLabels: {
-                    show: false
-                },
-                rendererOptions : {
-                    barWidth : 12,
-                    barMargin : 0,
-                    barPadding : 0
-                }
-            },
-            axes: {
-                xaxis: {
-                    renderer: $.jqplot.CategoryAxisRenderer,
-                    tickOptions : {
-
-                    }
-                }
-            },
-            highlighter: {
-                show: false
-            },
-            grid: {
-                drawGridLines: true,        // wether to draw lines across the grid or not.
-                gridLineColor: '#FFA319',    // *Color of the grid lines.
-                background: '#000000',      // CSS color spec for background color of grid.
-                borderColor: '#FFA319',     // CSS color spec for border around grid.
-                borderWidth: 2.0,           // pixel width of border around grid.
-                renderer: $.jqplot.CanvasGridRenderer,  // renderer to use to draw the grid.
-                rendererOptions: {}         // options to pass to the renderer.  Note, the default
-                                    // CanvasGridRenderer takes no additional options.
-            }
-        });
-
-
-        var accountEliteKills = $.jqplot('accountEliteKills', [data["account_elite_kills"]], {
-            // Only animate if we're not using excanvas (not in IE 7 or IE 8)..
-            animate: !$.jqplot.use_excanvas,
-            title: "Account Elite Kills",
-            seriesColors : ["#CC0000"],
-            seriesDefaults:{
-                renderer:$.jqplot.BarRenderer,
-                pointLabels: {
-                    show: false
-                },
-                rendererOptions : {
-                    barWidth : 8,
-                    barMargin : 0,
-                    barPadding : 0
-                }
-            },
-            axes: {
-                xaxis: {
-                    renderer: $.jqplot.CategoryAxisRenderer,
-                    tickOptions : {
-
-                    }
-                }
-            },
-            highlighter: {
-                show: false
-            }
-        });
-
-        var accountProgress = $.jqplot('accountProgress', [data["account_progress"]], {
-            // Only animate if we're not using excanvas (not in IE 7 or IE 8)..
-            animate: !$.jqplot.use_excanvas,
-            title: "Account Progress",
-            seriesColors : ["#CC0000"],
-            seriesDefaults:{
-                renderer:$.jqplot.BarRenderer,
-                pointLabels: {
-                    show: false
-                },
-                rendererOptions : {
-                    barWidth : 10,
-                    barMargin : 0,
-                    barPadding : 0
-                },
-                shadow : false
-            },
-            axes: {
-                xaxis: {
-                    renderer: $.jqplot.CategoryAxisRenderer,
-                    tickOptions : {
-                        showLabel : false,
-                        show: false
-                    }
-                    
-                }
-            },
-            highlighter: {
-                show: false
-            }
-        });
-
     }
     
     /**** Begin New World Order **********/
     $scope.selectedClass = "";
     $scope.charClass = ["Barbarian", "Demon Hunter" , "Monk", "Witch Doctor", "Wizard"];
-    $scope.slots = ["head", "torso", "feet", "hands", "legs", "bracers", "neck", "finger", "wapon", "off hand", "waist", "sholders"];
+    $scope.slots = ["head", "torso", "feet", "hands", "legs", "bracers", "neck", "finger", "mainHand", "offHand", "waist", "sholders"];
     $scope.selectedSlot = $scope.slots[0]
     $scope.availbleAttrs = _.keys(affixes).sort();
 
+
+    $scope.percentLookingForItem = null;
     $scope.rankGt = null;
     $scope.rankLt = null;
     $scope.accountEliteKillsGt = 0;
@@ -307,7 +211,9 @@ function DiabloController($scope, $log, $http, $rootScope, appConstants) {
         var paramData = {};
         for(var i = 0; i < $scope.providedAttributes.length; i++){
             if($scope.providedAttributes[i].value > 0){
-               paramData[$scope.providedAttributes[i].name] = $scope.providedAttributes[i].value;
+                var attrName = $scope.providedAttributes[i].name.toUpperCase();
+                attrName = attrName.replace(/\s/g, '');
+               paramData[attrName] = $scope.providedAttributes[i].value;
             }
             
         }
@@ -315,6 +221,8 @@ function DiabloController($scope, $log, $http, $rootScope, appConstants) {
         if($scope.selectedSlot != null && $scope.selectedSlot.length > 0){
             paramData["slot"] = $scope.selectedSlot;
         }
+
+
 
         $log.log("paramData = "+angular.toJson(paramData));
         paramData["callback"] = "JSON_CALLBACK"
@@ -341,6 +249,13 @@ function DiabloController($scope, $log, $http, $rootScope, appConstants) {
             $scope.showLandingPage = false;
             $scope.rankGt = data.stats["num_gt"];
             $scope.rankLt = data.stats["num_lt"];
+
+            var sum = $scope.rankGt+$scope.rankLt;
+            if(sum != null && $scope.rankLt != null){
+                $scope.percentLookingForItem = Math.round(($scope.rankLt / (1.0*sum))*100*100)/100.0;
+            }
+            
+
             $scope.accountEliteKillsGt = data.stats["acct_elite_avg"]["gt"];
             $scope.accountEliteKillsLt = data.stats["acct_elite_avg"]["lt"];
             $scope.characterEliteKillsGt = data.stats["char_elite_avg"]["gt"];
@@ -351,10 +266,22 @@ function DiabloController($scope, $log, $http, $rootScope, appConstants) {
             $scope.characterParagonLevelLt = data.stats["char_plvl_avg"]["lt"];
             $scope.estGoldEarned = data.stats["avg_gold_lt"];
 
-            $scope.createBarChart("acctEliteKillsGt", "Elite Kills Distribution for Better Items", data["account_elite_kills"]["gt"]);
-            $scope.createBarChart("acctEliteKillsLt", "Elite Kills Distribution for Worse Items", data["account_elite_kills"]["lt"]);
-            $scope.createBarChart("acctPlvlGt", "Paragon Level Distribution for Better Items", data["account_paragon_levels"]["gt"]);
-            $scope.createBarChart("acctPlvlLt", "Paragon Level Distribution for Worse Items", data["account_paragon_levels"]["lt"]);
+            $scope.accountEliteKillsGt = Math.round($scope.accountEliteKillsGt*100) / 100.0;
+            $scope.accountEliteKillsLt = Math.round($scope.accountEliteKillsLt*100) / 100.0;
+            $scope.characterEliteKillsGt = Math.round($scope.characterEliteKillsGt * 100) / 100.0;
+            $scope.characterEliteKillsLt = Math.round($scope.characterEliteKillsLt*100) / 100.0;
+            $scope.accountParagonLevelGt = Math.round($scope.accountParagonLevelGt*100) / 100.0;
+            $scope.accountParagonLevelLt = Math.round($scope.accountParagonLevelLt * 100) / 100.0;
+            $scope.characterParagonLevelGt = Math.round($scope.characterParagonLevelGt * 100) / 100.0;
+            $scope.characterParagonLevelLt = Math.round($scope.characterParagonLevelLt * 100) / 100.0;
+            $scope.estGoldEarned = Math.round($scope.estGoldEarned*100) / 100.0;
+
+            var eliteKillBins = ["2000","4000","6000","8000","10000","12000","14000","16000","18000","20000+"];
+            var paragonBins = ["0-10", "11-20", "21-30", "31-40", "41-50", "51-60", "61-70", "71-80", "81-90", "91-100"];
+            $scope.createBarChart("acctEliteKillsGt", "Elite Kills Distribution for Better Items", data["account_elite_kills"]["gt"], eliteKillBins, "Elite Kills", "%");
+            $scope.createBarChart("acctEliteKillsLt", "Elite Kills Distribution for Worse Items", data["account_elite_kills"]["lt"], eliteKillBins, "Elite Kills", "%");
+            $scope.createBarChart("acctPlvlGt", "Paragon Level Distribution for Better Items", data["account_paragon_levels"]["gt"], paragonBins, "Paragon Levels");
+            $scope.createBarChart("acctPlvlLt", "Paragon Level Distribution for Worse Items", data["account_paragon_levels"]["lt"], paragonBins, "Paragon Levels");
 
             //$scope.createCharts(data);
 

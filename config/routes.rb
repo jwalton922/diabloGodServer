@@ -60,4 +60,5 @@ DiabloGodServer::Application.routes.draw do
   match 'evaluator', :to => 'item#evaluator'
   match 'overview', :to => 'item#overview'
   match 'stats', :to => 'item#stats'
+  match 'healthAndStatus', :to => 'item#health_and_status'
 end

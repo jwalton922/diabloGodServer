@@ -9,7 +9,7 @@
         <meta name="format-detection" content="telephone=no" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description" content="Information about upcoming features for diabloitem.info" />
+        <meta name="description" content="Frequently asked questions concerning diabloitem.info" />
         <meta name="keywords" content="diablo diablo3 items statistics stats info top best gold battletag pve character player ranking loot statistic big data"/>
         <!--link rel="stylesheet" type="text/css" href="lib/bootstrap/css/bootstrap.min.css"
         /-->
@@ -86,7 +86,7 @@ window.myCustomTags = [ 'yourDirective', 'somebodyElsesDirective' ]; // optional
 <![endif]-->
     </head>
     
-    <body ng-controller="DiabloController" ng-init="init()">
+    <body ng-controller="DiabloController" ng-init="initHealthAndStatus()">
         <div id="wrap">
             <div id="main" class="container-fluid clearfix">
                 <div class="row-fluid">
@@ -126,11 +126,11 @@ window.myCustomTags = [ 'yourDirective', 'somebodyElsesDirective' ]; // optional
                             <li>
                                 <a href="wizard.html">Wizard</a>
                             </li>
-                            <li>
-                                <a href="health.html">Health of Game</a>
-                            </li>
                             <li class="active">
-                                <a href="#">Coming Soon</a>
+                                <a href="#">Health of Game</a>
+                            </li>
+                            <li>
+                                <a href="comingsoon.html">Coming Soon</a>
                             </li>
                             <li>
                                 <a href="faq.html">FAQ</a>
@@ -141,13 +141,11 @@ window.myCustomTags = [ 'yourDirective', 'somebodyElsesDirective' ]; // optional
                 <div class="row-fluid">
                     <div class="span12">
                         <div class="metal"></div>
-                        <h2>Coming Soon</h3>
+                        <h2>Health and Status of the Game</h3>
+                            The results are continuously updating.
                         <ul>
-                            <li><h3>Play time analysis:</h3>Since we are tracking information over time, we can determine exactly what has changed for a profile.  We will be able to determine things like: how much time was spent on a hero/account and frequency of item upgrades.  Aggregating that information we can get an idea into the health and status of Diablo 3.</li>
-                            <li><h3>Character analysis:</h3>We have information on tens of thousands of characters, and will provide a tool to rank a hero based on their stats and progress.</li>
-                            <li><h3>More Tools and Calculators</h3>The community has already developed a lot of good tools and calculators for things such as item scores, effective health pool, dps increases.  We hope to incorporate those as well as come up with our own!</li>
-                            <li><h3>Hardcore analysis:</h3>Blizzard's API provides some interesting information about Hardcore characters, including deceased heroes.  There should be a lot of interesting information to be gleaned from analyzing that data.</li>
-                            <li><h3>Even more:</h3>We plan to listen to your feedback and put together analytics to find the information you want!</li>
+                            <li><h3>Elite Kills</h3>Total: {{eliteKillTotal}}, Average: {{eliteKillAvg}}, Accounts sampled: {{eliteKillAccounts}}</li>
+                            <li><h3>Play Time</h3>Time Between Playing Average: {{lastPlayedAvg}}<br />Coming soon: We'll be showing this number over time instead of just the current average.</li>
                         </ul>
                     </div>
                 </div>

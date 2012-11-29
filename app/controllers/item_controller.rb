@@ -1,4 +1,9 @@
 class ItemController < ApplicationController
+
+@@connection = MongoMapper.connection
+@@db = @@connection['diablo']
+@@db.authenticate('diabloUser', 'diabloUser')
+
   #Block_Amount_Item_Min
   #Block_Amount_Item_Delta
   #Block_Chance_Bonus_Item
@@ -151,6 +156,22 @@ class ItemController < ApplicationController
 
   def overview
 
+  end
+
+  def health_and_status
+    
+    collection = @@db['eliteKills']
+    searchObject = {};
+    searchObject["stats"] = "total";
+    cursor = collection.find(searchObject)
+    stats = nil
+    logger.debug("Looking up total stats");
+    cursor.each do |item|
+      logger.debug("Found stat: #{item.to_json}")
+      stats = item
+    end
+    logger.debug("return obj: #{stats.to_json}")
+    render :json => stats.to_json, :callback => params[:callback]
   end
 
   def stats

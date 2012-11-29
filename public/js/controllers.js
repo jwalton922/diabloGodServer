@@ -11,6 +11,73 @@ function DiabloController($scope, $log, $http, $rootScope, appConstants) {
     $scope.currentSelection = null;
     $scope.previousSelections = [];
     $scope.showLandingPage = true;
+    $scope.eliteKillTotal = "Loading...";
+    $scope.eliteKillAvg = "Loading...";
+    $scope.eliteKillAccounts = "Loading...";
+    $scope.lastPlayedAvg = "Loading...";
+
+    $scope.initHealthAndStatus = function(){
+        $log.log("Initializing health and status");
+        var paramData = {};
+        paramData["callback"] = "JSON_CALLBACK"
+        var requestUrl = "/healthAndStatus";
+        var headerData = {
+            "Accepts": "application/json",
+            "Content-Type": "application/json"
+        };
+        var request = {};
+        request.success = function(xhr){
+            $log.log("Received item results: "+angular.toJson(xhr));
+
+
+        };
+        request.error = function(xhr){
+            $log.log("Error getting item results: "+angular.toJson(xhr));
+        };
+
+        $log.log("Requesting updated data");
+        $http.jsonp(requestUrl, {
+            params : paramData,
+            headers: headerData
+        }).
+        success(function(data, status, headers, config){
+            $log.log("Success! data from server: "+angular.toJson(data));
+            
+            $scope.eliteKillAvg = data.eliteKillAvg;
+            $scope.eliteKillAvg = Math.round($scope.eliteKillAvg*100)/100.0
+            $scope.eliteKillAccounts = data.profileCount;
+            $scope.lastPlayedAvg = data.lastUpdateAvg;
+            $scope.eliteKillTotal = angular.toJson(data.eliteKillSum);
+            $log.log("data.eliteKillSum = "+data.eliteKillSum);
+            $log.log("total elite kills: "+$scope.eliteKillTotal)
+
+        }).error(function(data, status, headers, config){
+            $log.log("Error :(");
+        });
+
+
+        setInterval(function(){
+            $log.log("Requesting updated data");
+        $http.jsonp(requestUrl, {
+            params : paramData,
+            headers: headerData
+        }).
+        success(function(data, status, headers, config){
+            $log.log("Success! data from server: "+angular.toJson(data));
+            
+            $scope.eliteKillAvg = data.eliteKillAvg;
+            $scope.eliteKillAvg = Math.round($scope.eliteKillAvg*100)/100.0
+            $scope.eliteKillAccounts = data.profileCount;
+            $scope.lastPlayedAvg = data.lastUpdateAvg;
+            $scope.eliteKillTotal = angular.toJson(data.eliteKillSum);
+            $log.log("data.eliteKillSum = "+data.eliteKillSum);
+            $log.log("total elite kills: "+$scope.eliteKillTotal)
+
+        }).error(function(data, status, headers, config){
+            $log.log("Error :(");
+        });
+        }, 15000);
+    }
 
     $scope.resetSelectionMenu = function(){
         $scope.currentSelection = null;

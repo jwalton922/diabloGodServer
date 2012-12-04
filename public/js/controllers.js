@@ -74,6 +74,9 @@ function DiabloController($scope, $log, $http, $rootScope, appConstants) {
             $scope.eliteKillAccounts = data.profileCount;
             $scope.lastPlayedAvg = data.lastUpdateAvg;
             $scope.eliteKillTotal = angular.toJson(data.eliteKillSum);
+
+            $scope.lastPlayedAvg = $scope.lastPlayedAvg/(1000*60*60*24*1.0);
+            $scope.lastPlayedAvg = Math.round($scope.lastPlayedAvg*100)/100.0;
             $log.log("data.eliteKillSum = "+data.eliteKillSum);
             $log.log("total elite kills: "+$scope.eliteKillTotal)
 

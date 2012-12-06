@@ -169,3 +169,11 @@ body > #wrap {height: auto; min-height: 100%;}
 	width: 100%;
 	z-index: 1000;
 }
+
+#bannerAd {
+	height: 60px;
+	width: 468px;
+	position: absolute;
+	right: 20px;
+	top: 25px;
+}

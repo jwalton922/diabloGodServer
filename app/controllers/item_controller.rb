@@ -319,7 +319,7 @@ class ItemController < ApplicationController
     stats["percent_gt"] = gt_stats["sum"] / (1.0*(lt_stats["sum"]+gt_stats["sum"]))
 
     elite_kills_per_hour = 75
-    gold_per_hour = 350000*(1+(acct_plvl_avg["lt"]/30.0))
+    gold_per_hour = 175000*(1+(acct_plvl_avg["lt"]/30.0))
     avg_gold_lt = (acct_elite_avg["lt"]/elite_kills_per_hour)*gold_per_hour
 
     stats["avg_gold_lt"] = avg_gold_lt

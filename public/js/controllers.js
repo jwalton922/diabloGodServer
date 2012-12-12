@@ -348,7 +348,7 @@ function DiabloController($scope, $log, $http, $rootScope, appConstants) {
             $scope.accountParagonLevelLt = Math.round($scope.accountParagonLevelLt * 100) / 100.0;
             $scope.characterParagonLevelGt = Math.round($scope.characterParagonLevelGt * 100) / 100.0;
             $scope.characterParagonLevelLt = Math.round($scope.characterParagonLevelLt * 100) / 100.0;
-            $scope.estGoldEarned = Math.round($scope.estGoldEarned*100) / 100.0;
+            $scope.estGoldEarned = Math.round($scope.estGoldEarned)/1000000;
 
             var eliteKillBins = ["2000","4000","6000","8000","10000","12000","14000","16000","18000","20000+"];
             var paragonBins = ["0-10", "11-20", "21-30", "31-40", "41-50", "51-60", "61-70", "71-80", "81-90", "91-100"];
